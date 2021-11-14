@@ -4,6 +4,8 @@ use PHPMailer\PHPMailer\Exception;
 
 
 require 'vendor/autoload.php';
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
 function resetContraseña($to, $key){
 $mail = new PHPMailer(true);
@@ -12,8 +14,8 @@ try {
     $mail->isSMTP();                                            
     $mail->Host       = 'in-v3.mailjet.com';                     
     $mail->SMTPAuth   = true;                                   
-    $mail->Username   = '269fbf24bd17c96355eb77730f35f31f';                     
-    $mail->Password   = 'b785c4d36a99c8afec522854916e0d90';           
+    $mail->Username   = $_ENV['SMTP_USER'];                     
+    $mail->Password   = $_ENV['SMTP_PASSWORD'];           
     $mail->Port       = 587;                                    
 
     
