@@ -127,6 +127,97 @@
         }
     }
 
+    function listarProvincias(){
+        global $connection;
+        $query = "SELECT * FROM provincias";
+
+        $res_query = mysqli_query($connection, $query);
+
+        if($res_query->num_rows > 0){
+            return $res_query;
+        }else{
+            return ('No hay provincias');
+        }
+    }
+
+    function listarDistritos(){
+        global $connection;
+        $query = "SELECT * FROM distritos";
+
+        $res_query = mysqli_query($connection, $query);
+
+        if($res_query->num_rows > 0){
+            return $res_query;
+        }else{
+            return ('No hay distritos');
+        }
+    }
+
+    function listarCorregimientos(){
+        global $connection;
+        $query = "SELECT * FROM corregimientos";
+
+        $res_query = mysqli_query($connection, $query);
+
+        if($res_query->num_rows > 0){
+            return $res_query;
+        }else{
+            return ('No hay corregimientos');
+        }
+    }
+
+    function listarClinicas(){
+        global $connection;
+        $query = "SELECT * FROM clinicas";
+
+        $res_query = mysqli_query($connection, $query);
+
+        if($res_query->num_rows > 0){
+            return $res_query;
+        }else{
+            return ('No hay clinicas');
+        }
+    }
+
+    function listarEspecialidades(){
+        global $connection;
+        $query = "SELECT * FROM especialidades";
+
+        $res_query = mysqli_query($connection, $query);
+
+        if($res_query->num_rows > 0){
+            return $res_query;
+        }else{
+            return ('No hay especialidades');
+        }
+    }
+
+    function listarMedicos(){
+        global $connection;
+        $query = "SELECT * FROM listar_medicos";
+
+        $res_query = mysqli_query($connection, $query);
+
+        if($res_query->num_rows > 0){
+            return $res_query;
+        }else{
+            return ('No hay medicos');
+        }
+    }
+    
+    function listarCitasPaciente(){
+        global $connection;
+        $query = "CALL ver_citas_paciente_sesion('".$_SESSION['id']."')";
+
+        $res_query = mysqli_query($connection, $query);
+
+        if($res_query->num_rows > 0){
+            return $res_query;
+        }else{
+            return ('No tiene citas agendadas');
+        }
+    }
+
     function agregarMedicos(){
         if(isset($_POST['submit'])){
             global $connection;
@@ -149,6 +240,47 @@
             }else{
                 header("Location: administrarMedicos.php?err=1");
                 exit();
+            }
+        }
+    }
+
+    function agendarCita(){
+        if(isset($_POST['agendar'])){
+            global $connection;
+            $id_usuario = $_POST['id_usuario'];
+            $id_medico = $_POST['medicos'];
+            $fecha_str = $_POST['fecha'];
+            $fecha = date("Y-m-d", strtotime($fecha_str));
+            $hora_str = $_POST['hora'];
+            $hora = date("H:i:s", strtotime($hora_str));
+            $duracion = $_POST['duracion'];
+
+            $query = "CALL agendar_cita('$id_usuario','$id_medico','$fecha','$hora','$duracion')";
+
+            $res_query = mysqli_query($connection, $query);
+            if($res_query){
+                header("Location: index.php");
+                exit();
+            }else{
+                header("Location index.php?err=1");
+                exit();
+            }
+        }
+    }
+
+    function cancelarCita(){
+        if(isset($_POST['cancelar'])){
+            global $connection;
+            $id_cita = $_POST['id_cita'];
+
+            $query = "DELETE FROM citas WHERE id=$id_cita";
+
+            $res_query = mysqli_query($connection, $query);
+
+            if($res_query){
+                echo'Cita Eliminada Exitosamente';
+            }else{
+                echo mysqli_error($connection);
             }
         }
     }

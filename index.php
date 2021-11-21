@@ -1,6 +1,6 @@
 <?php
-    require './session.php';
-    require './DB.php';
+    require_once './session.php';
+    require_once './DB.php';
     if(!isset($_SESSION['nombre'])){
         header("Location: iniciarSesion.php");
         exit();
@@ -19,6 +19,7 @@
     <?php if($_SESSION['rol'] == 'paciente'): ?>
         <script src="https://unpkg.com/petite-vue" defer init></script>
         <h1>Bienvenido paciente <?php echo($_SESSION['nombre'].' '.$_SESSION['apellido']); ?></h1>
+        <?php require_once './componentes/paciente/index.php' ?>
     <?php elseif($_SESSION['rol'] == 'medico'): ?>
         <script src="https://unpkg.com/petite-vue" defer init></script>
         <h1>Bienvenido medico <?php echo($_SESSION['nombre'].' '.$_SESSION['apellido']); ?></h1>
