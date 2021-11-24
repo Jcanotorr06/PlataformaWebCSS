@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
+body{
+    font-family: 'Roboto', sans-serif !important;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+h1{
+    font-size: calc(1.5rem + 1.5vw);
+    font-weight: bold;
+}
+.bg-blue{
+    background-color: #0163AC;
+    background-image: url('https://raw.githubusercontent.com/Jcanotorr06/images/main/css.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.mt-6{
+    margin-top: 6rem;
+}
+
+.min-h-100{
+    min-height: 100%;
+}
+
+.form-control{
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-color: #a5acb3;
+    border-radius: 1%;
+    transition: 0.3s;
+}
+
+.form-floating label{
+    transition: 0.3s;
+}
+
+.btn-primary{
+    background-color: #0163AC;
+}
+.btn-primary:hover{
+    background-color: #01497f;
+}
+
+a{
+    color: #0163AC;
+}
+a:hover{
+    color: #01497f;
+}
+a:visited{
+    color: #1b9dfe;
+}
+a:visited:hover{
+    color: #01497f;
+}
+
+.form-floating > .form-control::placeholder{
+    color: #b1b1b1;
+}
+.form-floating > .form-control:not(:focus)::placeholder{
+    color: transparent;
+}
