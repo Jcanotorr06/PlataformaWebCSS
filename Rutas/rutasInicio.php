@@ -1,6 +1,6 @@
 <?php
     //Maneja las rutas validas para un usuario que no tiene una sesion activa
-    switch($accion){
+    switch($accion){//Dependiendo de la ruta accedida se ejecuta el metodo del controlador correspondiente
         case '/':
             $controlador->index();
             break;
