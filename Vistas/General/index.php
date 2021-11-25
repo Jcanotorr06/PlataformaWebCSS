@@ -2,6 +2,53 @@
 <head>
     <title>Inicio | Plataforma Web CSS</title>
 </head>
-<main class="min-h-100 d-flex align-items-center justify-content-center flex-grow-1">
-    <h1>Inicio</h1>
+<main class="min-h-100 container-lg d-flex flex-column align-items-center justify-content-start flex-grow-1 py-3">
+    <h2 class="text-center fw-normal text-black-50 my-5 h1">Mis Citas</h2>
+    <div class="w-100 overflow-x">
+        <table class="table table-striped table-hover min-w-900" id="example">
+            <thead class="table-head text-white">
+                <tr>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Clínica</th>
+                    <th>Medico</th>
+                    <th>Especialidad</th>
+                    <th>Cédula del Paciente</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($citas as $cita):?>
+                    <tr>
+                        <td><?php echo $cita['fecha']?></td>
+                        <td><?php echo $cita['hora']?></td>
+                        <td><?php echo $cita['clinica']?></td>
+                        <td><?php echo $cita['nombre_medico'] ?></td>
+                        <td><?php echo $cita['especialidad'] ?></td>
+                        <td><?php echo $cita['cedula_paciente']?></td>
+                        <td><button class="btn btn-primary rounded-pill btn-sm">Ver Cita</button></td>
+                    </tr>
+                <?php endforeach;?>
+            </tbody>
+        </table>
+    </div>
 </main>
+<script>
+    let table = new DataTable('#example', {
+        "pageLength": 10,
+        "searching": false,
+        "lengthChange": false,
+        "autoWidth": false,
+        "ordering": false,
+        "info": false,
+        "scrollX": true,
+        "language": {
+            "paginate": {
+                "previous": "← anterior",
+                "next": "siguiente →"
+            }
+        }
+    });
+/*     document.getElementById('example_paginate').getElementsByClassName('previous')[0].innerHTML = "← anterior"
+    document.getElementById('example_paginate').getElementsByClassName('next')[0].innerHTML = "siguiente →" */
+</script>
