@@ -24,27 +24,27 @@
             require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Inicio/recuperar.php';
         }
 
-        public function registrarPaciente(){
+        public function registrarPaciente(){// Funcion que procesa el registro de un paciente
             $data['nombre'] = $_POST['nombre'];
             $data['apellido'] = $_POST['apellido'];
             $data['cedula'] = $_POST['cedula'];
             $data['email'] = $_POST['email'];
-            $data['contraseña'] = password_hash($_POST['contraseña'], PASSWORD_DEFAULT);
+            $data['contraseña'] = password_hash($_POST['contraseña'], PASSWORD_DEFAULT);//Se encripta la contraseña antes de almacenarla
 
             $inicio = new Modelo_Inicio();
-            if($inicio->registro($data)){
+            if($inicio->registro($data)){//Si el registro fue completado exitosamente...
                 $this->registroExitoso(1);
             }else{
                 $this->error('/registro',1);
             } 
         }
 
-        public function iniciarSesion(){
+        public function iniciarSesion(){// Funcion que procesa el inicio de sesion de un usuario
             $data['usuario'] = $_POST['usuario'];
             $data['contraseña'] = $_POST['contraseña'];
 
             $inicio = new Modelo_Inicio();
-            if($inicio->iniciarSesion($data)){
+            if($inicio->iniciarSesion($data)){//Si el inicio de sesion se completó con exito...
                 header('Location: /');
                 exit();
             }else{
@@ -52,13 +52,13 @@
             }
         }
 
-        public function registroExitoso($status_num){
-            header("Location: /?status=$status_num");
+        public function registroExitoso($status_num){//Funcion utilizada para indicar un registro exitoso
+            header("Location: /?status=$status_num");// Redirige al usuario a la pagina de inicio con un query status para indicar el exito
             exit();
         }
 
-        public function error($ruta, $err_num){
-            header("Location: $ruta?err=$err_num");
+        public function error($ruta, $err_num){//Funcion utiliada para indicar un proceso fallido
+            header("Location: $ruta?err=$err_num");//Redirige al usuario a la ruta especificada con un query err para indicar que ocurrio un error
             exit();
         }
     }

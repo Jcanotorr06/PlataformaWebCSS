@@ -8,8 +8,7 @@
         }
 
         public function registro($data){//Funcion que llama el procedimiento almacenado crear_usuario para registrar un nuevo usuario
-            $query = "Call crear_usuario('".$data['nombre']."','".$data['apellido']."','".$data['cedula']."','".$data['email']."','".$data['contraseña']."')";
-            $res = mysqli_query($this->db, $query);
+            $res = $this->db->query("Call crear_usuario('".$data['nombre']."','".$data['apellido']."','".$data['cedula']."','".$data['email']."','".$data['contraseña']."')");
             if($res){//Si el query fue ejecutado exitosamente...
                 return true;
             }else{
@@ -18,14 +17,14 @@
             }
         }
 
-        public function iniciarSesion($data){
+        public function iniciarSesion($data){//Funcion que llama el procedimiento almacenado iniciar_sesion para iniciar la sesion de un usuario
             $res = $this->db->query("Call iniciar_sesion('".$data['usuario']."')");
-            if($res->num_rows > 0){
+            if($res->num_rows > 0){//Si el query devuelve por lo menos 1 fila...
                 $usuario = $res->fetch_assoc();
                 $contraseña_encriptada = $usuario['contraseña'];
-                if(password_verify($data['contraseña'], $contraseña_encriptada)){
-                    $_SESSION['id'] = $usuario['id'];
-                    $_SESSION['rol'] = $usuario['rol'];
+                if(password_verify($data['contraseña'], $contraseña_encriptada)){//Si la contraseña enviada concuerda con la contraseña almacenada...
+                    $_SESSION['id'] = $usuario['id'];//Se almacena el id del usuario en la session
+                    $_SESSION['rol'] = $usuario['rol'];//Se almacena el rol del usuario en la sesion
                     return true;
                 }else{
                     return false;

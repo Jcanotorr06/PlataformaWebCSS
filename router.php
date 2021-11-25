@@ -1,8 +1,10 @@
 <?php
-    $ruta = parse_url($_SERVER['REQUEST_URI']);//La ruta a la que se intenta acceder
-    $accion = $ruta['path'];
+    $url = parse_url($_SERVER['REQUEST_URI']);//Se almacena la url a la que se intenta acceder
+    $accion = $url['path']; //Se extrae la ruta deseada de la url con el parametro 'path'
+
     require_once $_SERVER['DOCUMENT_ROOT'].'/Controladores/Controlador'.$controlador.'.php';//Se incluye el controlador correspondiente a la situacion del usuario (Administrador, Paciente, Medico o Inicio)
-    switch($controlador){
+    
+    switch($controlador){//Dependiendo del 'controlador' definido por el rol...
         case 'Inicio' || 'Paciente' || 'Medico' || 'Administrador'://Si se utiliza uno de los controladores validos...
             $tipo = $controlador;
             $controlador_nombre = 'Controlador'.$tipo;//Se crea una variable con el nombre del archivo del controlador correspondiente

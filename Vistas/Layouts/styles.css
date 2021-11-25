@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');/*Se importa la fuente Roboto*/
 
 body{
     font-family: 'Roboto', sans-serif !important;
@@ -59,9 +59,9 @@ a:visited:hover{
     color: #01497f;
 }
 
-.form-floating > .form-control::placeholder{
+.form-floating > .form-control::placeholder{/* Se cambia el color por defecto del placeholder de los inputs flotantes */
     color: #b1b1b1;
 }
-.form-floating > .form-control:not(:focus)::placeholder{
+.form-floating > .form-control:not(:focus)::placeholder{/* Se cambia el color del placeholder de los input flotantes a transparente cuando el input está activo*/
     color: transparent;
 }

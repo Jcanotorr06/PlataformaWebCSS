@@ -1,5 +1,5 @@
 <?php 
-    require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Layouts/offcanvas.php'
+    require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Layouts/offcanvas.php'//Se incluye el elemento de navegacion offcanvas para dispositivos moviles
 ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom border-dark">
     <div class="container-fluid">
@@ -15,8 +15,8 @@
     </div>
 </nav>
 <script>
-    var target
-    switch(window.location.pathname){
+    var target//Variable que almacena el indice del link activo en el navbar
+    switch(window.location.pathname){//Dependiendo de la ruta actual se actualiza la varibale target
         case '/' || '':
             target = 0;
             break;
@@ -24,8 +24,8 @@
             target = 1;
             break;
     }
-    document.getElementById('nav').getElementsByTagName('a')[target].classList.add("fw-bold");
-    document.getElementById('nav').getElementsByTagName('a')[target].classList.add("text-dark");
-    document.getElementById('menu').getElementsByTagName('a')[target].classList.add("fw-bold");
-    document.getElementById('menu').getElementsByTagName('a')[target].classList.add("text-dark");
+    document.getElementById('nav').getElementsByTagName('a')[target].classList.add("fw-bold");//Se cambia la intensidad del link activo en la barra de navegacion a negrita
+    document.getElementById('nav').getElementsByTagName('a')[target].classList.add("text-dark");//Se cambia el color del link en la barra de navegacion activo a negro
+    document.getElementById('menu').getElementsByTagName('a')[target].classList.add("fw-bold");//Se cambia la intensidad del link activo en el menu offcanvas a negrita
+    document.getElementById('menu').getElementsByTagName('a')[target].classList.add("text-dark");//Se cambia el color del link activo en el menu offcanvas a negro
 </script>

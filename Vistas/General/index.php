@@ -1,3 +1,4 @@
+<!-- Esta vista corresponde a la pagina de inicio compartida entre las vistas de paciente y medico -->
 <head>
     <title>Inicio | Plataforma Web CSS</title>
 </head>
