@@ -13,15 +13,6 @@
     </style>
 </head>
 <body>
-    <header class=" flex-grow-0">
-        <?php 
-            if(isset($_SESSION['rol'])){//Si existe un rol en la sesion...
-                if($_SESSION['rol'] == ('paciente' || 'medico')){// Si el rol es paciente o medico...
-                    require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Layouts/navbar.php';//Se incluye la barra de navegacion correspondiente
-                }
-            } 
-        ?>
-    </header>
     <?php require_once $_SERVER['DOCUMENT_ROOT'].'/router.php'?>
 </body>
 </html>

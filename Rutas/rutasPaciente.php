@@ -1,5 +1,9 @@
 <?php
     //Maneja las rutas validas para un usuario con el rol de paciente
+    $rutas = array('', '/', '/404');
+    if(in_array($accion, $rutas)){
+        require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Layouts/navbar.php';//Se incluye la barra de navegacion correspondiente
+    };
     switch($accion){
         case '/':
             $controlador->index();
