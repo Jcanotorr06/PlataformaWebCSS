@@ -4,7 +4,7 @@
     ?>
     <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom border-dark">
         <div class="container-fluid">
-            <a href="/" class="navbar-brand">Plataforma Web Css</a>
+            <a href="/" class="navbar-brand fw-bold">Plataforma Web Css</a>
             <button type="button" class="navbar-toggler border-0" data-bs-toggle="offcanvas" data-bs-target="#offcanvas">
                 <span class="navbar-toggler-icon"></span>
             </button>

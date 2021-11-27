@@ -11,6 +11,7 @@
         <h2 class=" text-black-50 fw-normal h1 mt-5">Agendar Cita</h2>
         <h5 class="fw-bold">1. Detalles de la Cita</h5>
         <form method="post" class="container w-100 d-flex flex-column align-items-center justify-content-center min-h-100">
+            <?php echo '<input type="hidden" name="id_usuario" value="'.$_SESSION['id'].'">'?>
             <div class="row g-md-5 g-4 mb-3 justify-content-between">
 
 
