@@ -5,7 +5,7 @@
     <div class="offcanvas-body px-0">
         <ul class="nav flex-column mb-sm-auto mb-0 align-items-start" id="menu">
             <a href="/" class="nav-item nav-link text-black-50">Inicio</a>
-            <a href="/agregar" class="nav-item nav-link text-black-50">Agregar</a>
+            <a href="/agendar" class="nav-item nav-link text-black-50">Agendar</a>
             <a href="/logout" class="nav-item nav-link text-black-50">Cerrar Sesion</a>
         </ul>
     </div>

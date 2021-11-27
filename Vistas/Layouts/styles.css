@@ -23,10 +23,10 @@ h1{
 }
 
 .min-h-100{
-    min-height: 100%;
+    min-height: 60vh !important;
 }
 
-.form-control{
+.form-control, .form-select{
     border-top: none;
     border-right: none;
     border-left: none;
@@ -69,10 +69,6 @@ a:visited:hover{
 .table-head{
     background: #808692;
 }
-
-/* .overflow-x{
-    overflow-x: auto;
-} */
 
 .min-w-900{
     min-width: 1000px;
