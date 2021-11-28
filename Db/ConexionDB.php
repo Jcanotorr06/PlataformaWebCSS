@@ -1,7 +1,7 @@
 <?php
     class Conexion{
         public static function Conectar(){
-            $conexion = mysqli_connect("localhost", "admin", "password", "csss");
+            $conexion = mysqli_connect("localhost", "root", "password", "csss");
             if($conexion){
                 return $conexion;
             }else{

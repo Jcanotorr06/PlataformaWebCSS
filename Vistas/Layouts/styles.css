@@ -114,3 +114,11 @@ td{
     color: #FFFFFF;
     background: #0163AC;
 }
+
+#footerLogo{
+    height: 75% !important;
+    opacity: 50%;
+}
+#footerLogo:hover{
+    opacity: 100%;
+}
