@@ -18,8 +18,8 @@
 </head>
 <main class="container-fluid vh-100">
     <section class="row h-100">
-        <div class="col-lg-6 d-none d-lg-block bg-blue">
-
+        <div class="col-lg-6 d-none d-lg-block bg-css">
+            <h2 class="text-center h1 text-white fw-bold mt-7">Plataforma Virtual CSS</h2>
         </div>
         <div class="col-lg-6 h-100 py-5 d-flex flex-column justify-content-center align-items-center">
             <h1 class="text-center my-4 px-3 d-lg-none">Plataforma Virtual CSS</h1>

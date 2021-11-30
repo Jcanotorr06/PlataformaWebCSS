@@ -18,7 +18,7 @@
 </head>
 <main class="container-fluid min-vh-100">
     <section class="row min-vh-100">
-        <div class="col-lg-6 d-none d-lg-block bg-blue">
+        <div class="col-lg-6 d-none d-lg-block bg-css">
 
         </div>
         <div class="col-lg-6 min-vh-100 py-5 d-flex flex-column justify-content-center align-items-center">

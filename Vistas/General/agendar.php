@@ -3,9 +3,9 @@
 </head>
 <?php
     if(isset($this->test)):
+        require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/General/agendar2.php';
+        /* echo $this->test->nombre; */
 ?>
-    Agendar 2
-    <?php echo $this->test->nombre?>
 <?php else:?>
     <main class="min-h-100 container-lg d-flex flex-column align-items-center justify-content-start flex-grow-1 py-3">
         <h2 class=" text-black-50 fw-normal h1 mt-5">Agendar Cita</h2>

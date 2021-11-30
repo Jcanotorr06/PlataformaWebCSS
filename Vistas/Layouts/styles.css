@@ -11,19 +11,35 @@ h1{
     font-size: calc(1.5rem + 1.5vw);
     font-weight: bold;
 }
-.bg-blue{
+.bg-css{
     background-color: #0163AC;
     background-image: url('https://raw.githubusercontent.com/Jcanotorr06/images/main/css.jpg');
     background-repeat: no-repeat;
     background-position: center;
 }
 
+.bg-blue{
+    background-color: #0163AC;
+}
+
 .mt-6{
     margin-top: 6rem;
 }
 
+.mt-7{
+    margin-top: 12rem;
+}
+
 .min-h-100{
     min-height: 60vh !important;
+}
+
+.min-h-full{
+    min-height: 100% !important;
+}
+
+.h-test{
+    height: 95vh;
 }
 
 .form-control, .form-select{
@@ -57,6 +73,15 @@ a:visited{
 }
 a:visited:hover{
     color: #01497f;
+}
+
+.back:hover>i{
+    color: #FFFFFF !important;
+}
+
+.max-h-50{
+    height: 50%;
+    max-height: 50%;
 }
 
 .form-floating > .form-control::placeholder{/* Se cambia el color por defecto del placeholder de los inputs flotantes */
