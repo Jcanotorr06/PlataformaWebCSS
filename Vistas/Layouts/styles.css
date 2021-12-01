@@ -103,6 +103,10 @@ td{
     width: fit-content;
 }
 
+.text-left{
+    text-align: start;
+}
+
 .dataTables_paginate{
     display: flex !important;
     justify-content: center;

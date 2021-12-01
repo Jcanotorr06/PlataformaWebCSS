@@ -5,7 +5,7 @@
         switch($errorNum){//Dependiendo del codigo de error...
             default:
                 $mensaje_error = "Esta cédula ya se encuentra en uso. Por favor intente de nuevo";//Mensaje de error a mostrar en el modal
-                require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Layouts/modalError.php';//Se importa elm modal
+                require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Layouts/modal1Boton.php';//Se importa elm modal
                 break;
         }
     }

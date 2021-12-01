@@ -19,6 +19,14 @@
         //Funcion para la pagina de inicio de un usuario paciente o medico
         function index(){
             $general = new Modelo_General();
+            if(isset($_POST['cancelar'])){
+                if($general->cancelarCita($_POST['id_cita'])){
+                    $mensaje_error = "Cita cancelada exitosamente";//Mensaje de error a mostrar en el modal
+                }else{
+                    $mensaje_error = "Ha ocurrido un error al cancelar su cita";//Mensaje de error a mostrar en el modal
+                }
+                require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Layouts/modal1Boton.php';//Se importa elm modal
+            }
             if($citas = $general->listarCitas($_SESSION['id'], $_SESSION['rol'])){//Si el usuario en sesion tiene citas existentes...
                 //Se importa la pagina de inicio general
                 require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/General/index.php';

@@ -33,7 +33,7 @@
 
             $inicio = new Modelo_Inicio();
             if($inicio->registro($data)){//Si el registro fue completado exitosamente...
-                $this->registroExitoso(1);
+                $this->registroExitoso(1, $_POST['email']);
             }else{
                 $this->error('/registro',1);
             } 
@@ -52,7 +52,12 @@
             }
         }
 
-        public function registroExitoso($status_num){//Funcion utilizada para indicar un registro exitoso
+        public function registroExitoso($status_num, $email){//Funcion utilizada para indicar un registro exitoso
+            //Se importa el archivo para enviar correos
+            require_once $_SERVER['DOCUMENT_ROOT'].'/Emails/enviar.php';
+            $body = file_get_contents($_SERVER['DOCUMENT_ROOT'].'/Emails/registro_exitoso.html');//Se convierte la plantilla html en una cadena de texto
+            enviarEmail($email, 'Registro Exitoso', $body);//Se envia el correo
+
             header("Location: /?status=$status_num");// Redirige al usuario a la pagina de inicio con un query status para indicar el exito
             exit();
         }

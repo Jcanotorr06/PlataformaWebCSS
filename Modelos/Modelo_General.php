@@ -113,6 +113,15 @@
             }
         }
 
+        public function cancelarCita($id_cita){
+            $res = $this->db->query("Delete From citas Where id='$id_cita'");
+            if($res){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
 
     }
 ?>

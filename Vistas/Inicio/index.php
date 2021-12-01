@@ -1,12 +1,14 @@
 <?php 
     if($query = isset(parse_url($_SERVER['REQUEST_URI'])['query']) ? parse_url($_SERVER['REQUEST_URI'])['query'] : false){//Si hay un query en la url, se almacena el en la variable query y...
         parse_str($query, $query_array);
-        $errorNum = $query_array['err'];//Se extrae el codigo de error
-        switch($errorNum){//Dependiendo del codigo de error...
-            default:
-                $mensaje_error = "Usuario o contraseña incorrecta. Por favor intente de nuevo";//Mensaje de error a mostrar en el modal
-                require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Layouts/modalError.php';//Se importa elm modal
-                break;
+        if(isset($query_array['err'])){
+            $errorNum = $query_array['err'];//Se extrae el codigo de error
+            switch($errorNum){//Dependiendo del codigo de error...
+                default:
+                    $mensaje_error = "Usuario o contraseña incorrecta. Por favor intente de nuevo";//Mensaje de error a mostrar en el modal
+                    require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Layouts/modal1Boton.php';//Se importa elm modal
+                    break;
+            }
         }
     }
 ?>
