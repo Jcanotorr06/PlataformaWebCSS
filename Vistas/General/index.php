@@ -22,7 +22,7 @@
             </thead>
             <tbody>
                 <?php foreach($citas as $cita):?>
-                    <?php echo '<tr data-bs-toggle="modal" data-bs-target="#modalCita" data-bs-id="'.$cita['id'].'" data-bs-paciente="'.$cita['nombre_paciente'].'" data-bs-cedula="'.$cita['cedula_paciente'].'" data-bs-medico="'.$cita['nombre_medico'].'" data-bs-especialidad="'.$cita['especialidad'].'" data-bs-fecha="'.$cita['fecha'].'" data-bs-hora="'.$cita['hora'].'" data-bs-clinica="'.$cita['clinica'].'" data-bs-corregimiento="'.$cita['corregimiento'].'" data-bs-distrito="'.$cita['distrito'].'" data-bs-provincia="'.$cita['provincia'].'">'?>
+                    <?php echo '<tr data-bs-toggle="modal" data-bs-target="#modalCita" data-bs-id="'.$cita['id'].'" data-bs-paciente="'.$cita['nombre_paciente'].'" data-bs-cedula="'.$cita['cedula_paciente'].'" data-bs-medico="'.$cita['nombre_medico'].'" data-bs-cedula-medico="'.$cita['cedula_medico'].'" data-bs-especialidad="'.$cita['especialidad'].'" data-bs-fecha="'.$cita['fecha'].'" data-bs-hora="'.$cita['hora'].'" data-bs-clinica="'.$cita['clinica'].'" data-bs-corregimiento="'.$cita['corregimiento'].'" data-bs-distrito="'.$cita['distrito'].'" data-bs-provincia="'.$cita['provincia'].'">'?>
                         <td><?php echo $cita['fecha']?></td>
                         <td><?php echo $cita['hora']?></td>
                         <td><?php echo $cita['clinica']?></td>
@@ -52,6 +52,7 @@
     </nav>
 </footer>
 
+<!-- Modal de detalles de cita -->
 <div class="modal fade" id="modalCita" tabindex="-1" aria-labelledby="labelModalCita" aria-hidden="true">
   <div class="modal-dialog modal-dialog">
     <div class="modal-content">
@@ -109,6 +110,7 @@
   </div>
 </div>
 
+<!-- Modal de cancelacion de cita -->
 <div class="modal fade" id="modalCancelar" tabindex="-1" aria-labelledby="labelModalError" aria-hidden="true">
   <div class="modal-dialog modal-dialog">
     <div class="modal-content p-lg-5 p-3">
@@ -117,6 +119,12 @@
         <div class="w-100 d-flex">
             <form action="" method="post" class="w-100">
                 <input type="hidden" name="id_cita" id="modal-id-cita">
+                <input type="hidden" name="cedula_paciente" id="modal-ced-pac">
+                <input type="hidden" name="nombre_paciente" id="modal-nom-pac">
+                <input type="hidden" name="cedula_medico" id="modal-ced-med">
+                <input type="hidden" name="nombre_medico" id="modal-nom-med">
+                <input type="hidden" name="fecha" id="modal-fecha">
+                <input type="hidden" name="especialidad" id="modal-esp">
                 <button type="submit" name="cancelar" class="btn btn-danger rounded-pill w-100 py-2">Si</button>
             </form>
             <button type="button" class="btn btn-secondary rounded-pill w-100 py-2" data-bs-dismiss="modal">No</button>
@@ -126,9 +134,9 @@
   </div>
 </div>
 
+
 <script>
     let citas = (<?php echo($citas_json)?>)
-    console.log(citas)
     let modal = document.getElementById('modalCita')
     modal.addEventListener('show.bs.modal', (e) =>{
         let cita = e.relatedTarget
@@ -136,6 +144,7 @@
         let paciente = cita.getAttribute('data-bs-paciente')
         let cedula = cita.getAttribute('data-bs-cedula')
         let medico = cita.getAttribute('data-bs-medico')
+        let cedula_medico = cita.getAttribute('data-bs-cedula-medico')
         let especialidad = cita.getAttribute('data-bs-especialidad')
         let fecha = cita.getAttribute('data-bs-fecha')
         let hora = cita.getAttribute('data-bs-hora')
@@ -145,6 +154,12 @@
         let provincia = cita.getAttribute('data-bs-provincia')
         
         document.getElementById('modal-id-cita').value = id
+        document.getElementById('modal-ced-pac').value = cedula
+        document.getElementById('modal-nom-pac').value = paciente
+        document.getElementById('modal-ced-med').value = cedula_medico
+        document.getElementById('modal-nom-med').value = medico
+        document.getElementById('modal-fecha').value = fecha
+        document.getElementById('modal-esp').value = especialidad
         modal.querySelector('.modal-paciente').textContent = paciente
         modal.querySelector('.modal-cedula').textContent = cedula
         modal.querySelector('.modal-medico').textContent = medico

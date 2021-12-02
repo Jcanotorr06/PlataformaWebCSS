@@ -13,6 +13,9 @@
         case '/recuperar':
             $controlador->recuperar();
             break;
+        case '/enviado':
+            $controlador->enviado();
+            break;
         case '/404':
             require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/404.php';
             break;

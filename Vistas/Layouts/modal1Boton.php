@@ -8,8 +8,15 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content p-lg-5 p-3">
       <div class="modal-body d-flex text-center flex-column justify-content-center align-items-center">
-        <h5><?php echo $mensaje_error?></h5>
-        <button type="button" class="btn btn-lg btn-danger rounded-pill py-lg-2 px-lg-5" data-bs-dismiss="modal">Aceptar</button>
+       
+        <?php if(isset($mensaje_error)): ?><!-- Si hay un mensaje de error se muestra un boton rojo -->
+            <h5><?php echo $mensaje_error?></h5>
+            <button type="button" class="btn btn-lg btn-danger rounded-pill py-lg-2 px-lg-5" data-bs-dismiss="modal">Aceptar</button>
+        
+            <?php elseif(isset($mensaje_exito)): ?><!-- Si hay un mensaje de exito se muestra un boton verde -->
+            <h5><?php echo $mensaje_exito?></h5>
+            <button type="button" class="btn btn-lg btn-success rounded-pill py-lg-2 px-lg-5" data-bs-dismiss="modal">Aceptar</button>
+        <?php endif;?>
       </div>
     </div>
   </div>

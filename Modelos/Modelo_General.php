@@ -113,10 +113,26 @@
             }
         }
 
+        //Cancela la cita
         public function cancelarCita($id_cita){
             $res = $this->db->query("Delete From citas Where id='$id_cita'");
-            if($res){
+            if($res){//Si la cita fue cancelada...
                 return true;
+            }else{
+                return false;
+            }
+        }
+
+        //Busca datos generales del usuario por su cedula
+        public function buscarUsuario($cedula){
+            $res = $this->db->query("Call listar_datos_usuario('$cedula')");
+            if($res->num_rows > 0){//Si el usuario existe...
+                while($x = $res->fetch_assoc()){
+                    $usuario = $x;
+                }
+                $this->db->close();//Se cierra la conexion a la BD
+                $this->db = Conexion::Conectar();//Se restablece la conexion a la BD
+                return $usuario;
             }else{
                 return false;
             }

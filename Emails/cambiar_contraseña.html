@@ -215,8 +215,8 @@
 														<tr>
 															<td style="text-align:center;width:100%;padding-top:35px;">
 																<h1
-																	style="margin: 0; color: #072b52; direction: ltr; font-family: 'Lora', Georgia, serif; font-size: 50px; font-weight: normal; letter-spacing: 1px; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0;">
-																	<strong>Registro Exitoso</strong></h1>
+																	style="margin: 0; color: #072b52; direction: ltr; font-family: 'Lora', Georgia, serif; font-size: 30px; font-weight: normal; letter-spacing: 1px; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0;">
+																	<strong>Hola {{ nombre }}, hemos Recibido su Solicitud para Cambiar su Contraseña</strong></h1>
 															</td>
 														</tr>
 													</table>
@@ -276,18 +276,19 @@
 																		style="font-size: 12px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; mso-line-height-alt: 18px; color: #222222; line-height: 1.5;">
 																		<p
 																			style="margin: 0; font-size: 16px; text-align: center;">
-																			<strong>Si usted puede leer este correo,
-																				esto significa que se ha registrado
-																				exitosamente en la plataforma virtual de
-																				la caja de seguro social.</strong></p>
-																		<p
-																			style="margin: 0; font-size: 16px; text-align: center;">
-																			<strong>Haga <a
-																					href="http://csspanama.online/"
-																					rel="noopener"
-																					style="text-decoration: underline; color: #8a3b8f;"
-																					target="_blank">aqui</a> para
-																				iniciar sesion.</strong></p>
+																			<strong>
+                                                                                Utilice el link debajo para crear una nueva contrasena. <br>
+                                                                                Si usted no ha solicitado el cambio de contrasena, ignore este email, el link expirara por su cuenta.
+                                                                            </strong></p>
+                                                                            <div style="padding: 10px 5px; background-color: #072b52; margin-top: 20px;">
+                                                                                <p
+                                                                                    style="margin: 0; font-size: 24px; text-align: center;">                                                                                    <strong><a
+                                                                                            href="http://csspanama.online/recuperar?llave={{ llave }}"
+                                                                                            rel="noopener"
+                                                                                            style="text-decoration: underline; color: #FFFFFF"
+                                                                                            target="_blank">Cambiar Contraseña</a> 
+                                                                                        </strong></p>
+                                                                            </div>
 																	</div>
 																</div>
 															</td>

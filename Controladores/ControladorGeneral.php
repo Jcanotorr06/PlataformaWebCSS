@@ -21,7 +21,8 @@
             $general = new Modelo_General();
             if(isset($_POST['cancelar'])){
                 if($general->cancelarCita($_POST['id_cita'])){
-                    $mensaje_error = "Cita cancelada exitosamente";//Mensaje de error a mostrar en el modal
+                    $this->enviarEmailCancelar();//Se envia el email de notificacion al paciente y al medico
+                    $mensaje_exito = "Cita cancelada exitosamente";//Mensaje de exito a mostrar en el modal
                 }else{
                     $mensaje_error = "Ha ocurrido un error al cancelar su cita";//Mensaje de error a mostrar en el modal
                 }
@@ -53,5 +54,38 @@
             require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/General/agendar.php';
          }
 
+
+         //Funcion que envía correo para notificar cancelacion de la cita a pacientes y medicos
+         public function enviarEmailCancelar(){
+            $cedula_paciente = $_POST['cedula_paciente'];
+            $cedula_medico = $_POST['cedula_medico'];
+            $nombre_paciente = $_POST['nombre_paciente'];
+            $nombre_medico = $_POST['nombre_medico'];
+            $fecha = $_POST['fecha'];
+
+            $general = new Modelo_General();
+            $paciente = $general->buscarUsuario($cedula_paciente);
+            $medico = $general->buscarUsuario($cedula_medico);
+            
+            if($paciente && $medico){//Si el paciente y medico existen
+                $email_paciente = $paciente['email'];
+                $email_medico = $medico['email'];
+
+                //Se importa la plantilla de citas canceladas
+                $body_paciente = $body_medico = file_get_contents($_SERVER['DOCUMENT_ROOT'].'/Emails/cita_cancelada.html');
+
+                //Se reemplazan los campos nombre y fecha con la informacion correspondiente
+                $body_paciente = str_replace(['{{ nombre }}', '{{ fecha }}'], [$nombre_medico, $fecha], $body_paciente);
+                $body_medico = str_replace(['{{ nombre }}', '{{ fecha }}'], [$nombre_paciente, $fecha], $body_medico);
+
+                //Se inporta el archivo para enviar correos
+                require_once $_SERVER['DOCUMENT_ROOT'].'/Emails/enviar.php';
+
+                //Se envian ambos correos
+                enviarEmail($email_paciente, 'Cita Cancelada', $body_paciente);
+                enviarEmail($email_medico, 'Cita Cancelada', $body_medico);
+            }
+         }
     }
+
 ?>

@@ -7,7 +7,8 @@
             $this->db = Conexion::Conectar();
         }
 
-        public function registro($data){//Funcion que llama el procedimiento almacenado crear_usuario para registrar un nuevo usuario
+        //Funcion que llama el procedimiento almacenado crear_usuario para registrar un nuevo usuario
+        public function registro($data){
             $res = $this->db->query("Call crear_usuario('".$data['nombre']."','".$data['apellido']."','".$data['cedula']."','".$data['email']."','".$data['contraseña']."')");
             if($res){//Si el query fue ejecutado exitosamente...
                 return true;
@@ -17,7 +18,8 @@
             }
         }
 
-        public function iniciarSesion($data){//Funcion que llama el procedimiento almacenado iniciar_sesion para iniciar la sesion de un usuario
+        //Funcion que llama el procedimiento almacenado iniciar_sesion para iniciar la sesion de un usuario
+        public function iniciarSesion($data){
             $res = $this->db->query("Call iniciar_sesion('".$data['usuario']."')");
             if($res->num_rows > 0){//Si el query devuelve por lo menos 1 fila...
                 $usuario = $res->fetch_assoc();
@@ -29,6 +31,56 @@
                 }else{
                     return false;
                 }
+            }else{
+                return false;
+            }
+        }
+
+        //Busca datos generales del usuario por su cedula
+        public function buscarUsuario($cedula){
+            $res = $this->db->query("Call listar_datos_usuario('$cedula')");
+            if($res->num_rows > 0){//Si el usuario existe...
+                while($x = $res->fetch_assoc()){
+                    $usuario = $x;
+                }
+                $this->db->close();//Se cierra la conexion a la BD
+                $this->db = Conexion::Conectar();//Se restablece la conexion a la BD
+                return $usuario;
+            }else{
+                return false;
+            }
+        }
+
+        //Inserta una nueva llave de recuperacion para el usuario con su fecha de expiracion
+        public function crearLlaveRecuperar($id, $llave, $expira){
+            $res = $this->db->query("INSERT INTO recuperar_contraseña(id_usuario, llave, expira) VALUES('$id', '$llave', '$expira')");
+            if($res){
+                return true;
+            }else{
+                return $this->db->error;
+            }
+        }
+
+        //Valida si la llave ha expiado
+        public function validarLlaveVigente($llave){
+            $res = $this->db->query("Call validar_recuperar_contraseña('$llave')");
+            if($res->num_rows > 0){
+                while($x = $res->fetch_assoc()){
+                    $data = $x;
+                }
+                $this->db->close();
+                $this->db = Conexion::Conectar();
+                return $data;
+            }else{
+                return false;
+            }
+        }
+
+        //Actualiza la contraseña del usuario
+        public function cambiarContraseña($cedula, $contraseña){
+            $res = $this->db->query("Update usuarios Set contraseña = '$contraseña' Where cedula = '$cedula'");
+            if($res){
+                return true;
             }else{
                 return false;
             }
