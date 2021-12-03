@@ -18,7 +18,10 @@ CREATE TABLE `administrar_clinicas` (
 	`clinica` VARCHAR(255) NULL COLLATE 'utf8mb4_general_ci',
 	`corregimiento` VARCHAR(255) NULL COLLATE 'utf8mb4_general_ci',
 	`distrito` VARCHAR(255) NULL COLLATE 'utf8mb4_general_ci',
-	`provincia` VARCHAR(255) NULL COLLATE 'utf8mb4_general_ci'
+	`provincia` VARCHAR(255) NULL COLLATE 'utf8mb4_general_ci',
+	`id_corregimiento` INT(11) NULL,
+	`id_distrito` INT(11) NULL,
+	`id_provincia` INT(11) NULL
 ) ENGINE=MyISAM;
 
 -- Dumping structure for view csss.administrar_especialidades
@@ -39,7 +42,9 @@ CREATE TABLE `administrar_medicos` (
 	`contraseña` VARCHAR(255) NULL COLLATE 'utf8mb4_general_ci',
 	`especialidad` VARCHAR(255) NULL COLLATE 'utf8mb4_general_ci',
 	`clinica` VARCHAR(255) NULL COLLATE 'utf8mb4_general_ci',
-	`duracion_citas` INT(11) NOT NULL
+	`duracion_citas` INT(11) NOT NULL,
+	`id_especialidad` INT(11) NOT NULL,
+	`id_clinica` INT(11) NOT NULL
 ) ENGINE=MyISAM;
 
 -- Dumping structure for view csss.administrar_pacientes
@@ -69,9 +74,9 @@ BEGIN
 END//
 DELIMITER ;
 
--- Dumping structure for procedure csss.agregar_medico
+-- Dumping structure for procedure csss.añadir_medico
 DELIMITER //
-CREATE DEFINER=`root`@`localhost` PROCEDURE `agregar_medico`(
+CREATE DEFINER=`root`@`localhost` PROCEDURE `añadir_medico`(
 	IN `nombre_in` VARCHAR(50),
 	IN `apellido_in` VARCHAR(50),
 	IN `cedula_in` VARCHAR(15),
@@ -81,6 +86,9 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `agregar_medico`(
 	IN `id_clinica_in` INT
 ,
 	IN `duracion_in` INT
+
+
+
 )
 BEGIN
 	INSERT INTO usuarios(nombre, apellido, cedula, email, contraseña, id_rol)
@@ -118,12 +126,12 @@ CREATE TABLE IF NOT EXISTS `citas` (
   CONSTRAINT `citas_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `citas_ibfk_2` FOREIGN KEY (`id_medico`) REFERENCES `medicos` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `citas_ibfk_3` FOREIGN KEY (`id_estado`) REFERENCES `estados` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 
 -- Dumping data for table csss.citas: ~1 rows (approximately)
 /*!40000 ALTER TABLE `citas` DISABLE KEYS */;
 INSERT INTO `citas` (`id`, `id_usuario`, `id_medico`, `fecha`, `hora`, `id_estado`) VALUES
-	(5, 2, 5, '2021-12-05', '11:30:00', 1);
+	(8, 10, 3, '2022-01-11', '14:00:00', 1);
 /*!40000 ALTER TABLE `citas` ENABLE KEYS */;
 
 -- Dumping structure for table csss.clinicas
@@ -134,7 +142,7 @@ CREATE TABLE IF NOT EXISTS `clinicas` (
   PRIMARY KEY (`id`),
   KEY `id_corregimiento` (`id_corregimiento`),
   CONSTRAINT `clinicas_ibfk_1` FOREIGN KEY (`id_corregimiento`) REFERENCES `corregimientos` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4;
 
 -- Dumping data for table csss.clinicas: ~23 rows (approximately)
 /*!40000 ALTER TABLE `clinicas` DISABLE KEYS */;
@@ -600,9 +608,9 @@ CREATE TABLE IF NOT EXISTS `especialidades` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `especialidad` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table csss.especialidades: ~20 rows (approximately)
+-- Dumping data for table csss.especialidades: ~21 rows (approximately)
 /*!40000 ALTER TABLE `especialidades` DISABLE KEYS */;
 INSERT INTO `especialidades` (`id`, `especialidad`) VALUES
 	(1, 'Psiquiatría'),
@@ -650,10 +658,10 @@ CREATE TABLE IF NOT EXISTS `horario_medicos` (
   `hora_descanso` time DEFAULT NULL,
   `hora_regreso` time DEFAULT NULL,
   `hora_salida` time DEFAULT NULL,
-  KEY `id_medico` (`id_medico`),
-  KEY `id_dia` (`id_dia`),
-  CONSTRAINT `horario_medicos_ibfk_1` FOREIGN KEY (`id_medico`) REFERENCES `medicos` (`id_usuario`),
-  CONSTRAINT `horario_medicos_ibfk_2` FOREIGN KEY (`id_dia`) REFERENCES `dias` (`id`)
+  KEY `horario_medicos_ibfk_1` (`id_medico`),
+  KEY `horario_medicos_ibfk_2` (`id_dia`),
+  CONSTRAINT `horario_medicos_ibfk_1` FOREIGN KEY (`id_medico`) REFERENCES `medicos` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `horario_medicos_ibfk_2` FOREIGN KEY (`id_dia`) REFERENCES `dias` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Dumping data for table csss.horario_medicos: ~10 rows (approximately)
@@ -698,9 +706,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `listar_citas_medico`(
 
 
 
+
 )
 BEGIN
-	SELECT cit.id, CONCAT(us.nombre, " ",us.apellido) as nombre_paciente, us.cedula as cedula_paciente, lm.nombre as nombre_medico, esp.especialidad, cit.fecha, TIME_FORMAT(cit.hora, "%r") as hora, med.duracion_citas as duracion, pro.provincia, dis.distrito, cor.corregimiento, cli.clinica
+	SELECT cit.id, CONCAT(us.nombre, " ",us.apellido) as nombre_paciente, us.cedula as cedula_paciente, lm.nombre as nombre_medico, lm.cedula as cedula_medico, esp.especialidad, cit.fecha, TIME_FORMAT(cit.hora, "%r") as hora, med.duracion_citas as duracion, pro.provincia, dis.distrito, cor.corregimiento, cli.clinica
 	FROM citas AS cit
 	JOIN usuarios AS us ON us.id = cit.id_usuario
 	JOIN medicos AS med ON med.id_usuario = cit.id_medico
@@ -725,9 +734,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `listar_citas_paciente`(
 
 
 
+
 )
 BEGIN
-	SELECT cit.id, CONCAT(us.nombre, " ",us.apellido) as nombre_paciente, us.cedula as cedula_paciente, lm.nombre as nombre_medico, esp.especialidad, cit.fecha, TIME_FORMAT(cit.hora, "%r") as hora, pro.provincia, dis.distrito, cor.corregimiento, cli.clinica
+	SELECT cit.id, CONCAT(us.nombre, " ",us.apellido) as nombre_paciente, us.cedula as cedula_paciente, lm.nombre as nombre_medico, lm.cedula as cedula_medico, esp.especialidad, cit.fecha, TIME_FORMAT(cit.hora, "%r") as hora, pro.provincia, dis.distrito, cor.corregimiento, cli.clinica
 	FROM citas AS cit
 	JOIN usuarios AS us ON us.id = cit.id_usuario
 	JOIN medicos AS med ON med.id_usuario = cit.id_medico
@@ -756,6 +766,18 @@ CREATE TABLE `listar_corregimientos_validos` (
 	`corregimiento` VARCHAR(255) NULL COLLATE 'utf8mb4_general_ci',
 	`id_distrito` INT(11) NULL
 ) ENGINE=MyISAM;
+
+-- Dumping structure for procedure csss.listar_datos_usuario
+DELIMITER //
+CREATE DEFINER=`root`@`localhost` PROCEDURE `listar_datos_usuario`(
+	IN `cedula_in` VARCHAR(13)
+
+)
+BEGIN
+	SELECT usu.id, usu.nombre, usu.email, usu.cedula  FROM usuarios as usu
+	WHERE usu.cedula = cedula_in;
+END//
+DELIMITER ;
 
 -- Dumping structure for view csss.listar_distritos_validos
 -- Creating temporary table to overcome VIEW dependency errors
@@ -793,6 +815,7 @@ CREATE TABLE `listar_medicos` (
 	`id` INT(11) NOT NULL,
 	`nombre` VARCHAR(511) NULL COLLATE 'utf8mb4_general_ci',
 	`email` VARCHAR(255) NULL COLLATE 'utf8mb4_general_ci',
+	`cedula` VARCHAR(255) NULL COLLATE 'utf8mb4_general_ci',
 	`id_especialidad` INT(11) NOT NULL,
 	`id_clinica` INT(11) NULL,
 	`duracion_citas` INT(11) NOT NULL
@@ -813,18 +836,105 @@ CREATE TABLE IF NOT EXISTS `medicos` (
   `duracion_citas` int(11) NOT NULL DEFAULT 60,
   PRIMARY KEY (`id_usuario`,`id_especialidad`),
   KEY `id_especialidad` (`id_especialidad`),
-  KEY `id_clinica` (`id_clinica`),
-  CONSTRAINT `medicos_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`),
+  KEY `medicos_ibfk_3` (`id_clinica`),
+  CONSTRAINT `medicos_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `medicos_ibfk_2` FOREIGN KEY (`id_especialidad`) REFERENCES `especialidades` (`id`),
-  CONSTRAINT `medicos_ibfk_3` FOREIGN KEY (`id_clinica`) REFERENCES `clinicas` (`id`)
+  CONSTRAINT `medicos_ibfk_3` FOREIGN KEY (`id_clinica`) REFERENCES `clinicas` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table csss.medicos: ~0 rows (approximately)
+-- Dumping data for table csss.medicos: ~2 rows (approximately)
 /*!40000 ALTER TABLE `medicos` DISABLE KEYS */;
 INSERT INTO `medicos` (`id_usuario`, `id_especialidad`, `id_clinica`, `duracion_citas`) VALUES
 	(3, 8, 5, 60),
 	(5, 20, 3, 60);
 /*!40000 ALTER TABLE `medicos` ENABLE KEYS */;
+
+-- Dumping structure for procedure csss.modificar_clinica
+DELIMITER //
+CREATE DEFINER=`root`@`localhost` PROCEDURE `modificar_clinica`(
+	IN `id_in` INT,
+	IN `clinica_in` VARCHAR(255),
+	IN `id_corregimiento_in` INT
+
+)
+BEGIN
+		UPDATE clinicas
+	SET
+		clinica = clinica_in,
+		id_corregimiento = id_corregimiento_in
+	WHERE id = id_in;
+END//
+DELIMITER ;
+
+-- Dumping structure for procedure csss.modificar_especialidad
+DELIMITER //
+CREATE DEFINER=`root`@`localhost` PROCEDURE `modificar_especialidad`(
+	IN `id_in` INT,
+	IN `especialidad_in` VARCHAR(255)
+
+)
+BEGIN
+	UPDATE especialidades
+	SET
+		especialidad = especialidad_in
+	WHERE id = id_in;
+END//
+DELIMITER ;
+
+-- Dumping structure for procedure csss.modificar_medico
+DELIMITER //
+CREATE DEFINER=`root`@`localhost` PROCEDURE `modificar_medico`(
+	IN `id_in` INT,
+	IN `nombre_in` VARCHAR(50),
+	IN `apellido_in` VARCHAR(50),
+	IN `cedula_in` VARCHAR(15),
+	IN `email_in` VARCHAR(255),
+	IN `contraseña_in` VARCHAR(255),
+	IN `id_especialidad_in` INT,
+	IN `id_clinica_in` INT,
+	IN `duracion_in` INT
+
+)
+BEGIN
+	UPDATE usuarios
+	SET
+		nombre = nombre_in,
+		apellido = apellido_in,
+		cedula = cedula_in,
+		email = email_in,
+		contraseña = contraseña_in
+	WHERE id = id_in;
+	
+	UPDATE medicos
+	SET
+		id_especialidad = id_especialidad_in,
+		id_clinica = id_clinica_in,
+		duracion_citas = duracion_in
+	WHERE id_usuario = id_in;
+END//
+DELIMITER ;
+
+-- Dumping structure for procedure csss.modificar_paciente
+DELIMITER //
+CREATE DEFINER=`root`@`localhost` PROCEDURE `modificar_paciente`(
+	IN `id_in` INT,
+	IN `nombre_in` VARCHAR(50),
+	IN `apellido_in` VARCHAR(50),
+	IN `cedula_in` VARCHAR(15),
+	IN `email_in` VARCHAR(255),
+	IN `contraseña_in` VARCHAR(255)
+)
+BEGIN
+		UPDATE usuarios
+	SET
+		nombre = nombre_in,
+		apellido = apellido_in,
+		cedula = cedula_in,
+		email = email_in,
+		contraseña = contraseña_in
+	WHERE id = id_in;
+END//
+DELIMITER ;
 
 -- Dumping structure for table csss.provincias
 CREATE TABLE IF NOT EXISTS `provincias` (
@@ -854,14 +964,14 @@ CREATE TABLE IF NOT EXISTS `recuperar_contraseña` (
   `llave` varchar(255) NOT NULL,
   `expira` datetime DEFAULT NULL,
   PRIMARY KEY (`id_usuario`,`llave`),
-  CONSTRAINT `recuperar_contraseña_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`)
+  CONSTRAINT `recuperar_contraseña_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Dumping data for table csss.recuperar_contraseña: ~2 rows (approximately)
 /*!40000 ALTER TABLE `recuperar_contraseña` DISABLE KEYS */;
 INSERT INTO `recuperar_contraseña` (`id_usuario`, `llave`, `expira`) VALUES
-	(2, '5ec40347582aab3350151ecbd6fc94c41e5d6b840f6cae97581cf58a8765a84b', '2021-11-14 20:48:04'),
-	(4, '06b76fb3db9897b10486f9ce2fee11726aeea69fb47fcc11a8a87f953953d5a6', '2021-11-07 23:31:20');
+	(10, 'e30f2af599d706a29a5d620d11c582bad333a1c68918f37ef9b6f7404f3876b2', '2021-12-02 15:32:01'),
+	(17, '1389821668fdfea624a22efbdcace2012fce815fc92946d16571fb07966e1982', '2021-12-02 06:35:18');
 /*!40000 ALTER TABLE `recuperar_contraseña` ENABLE KEYS */;
 
 -- Dumping structure for table csss.roles
@@ -893,23 +1003,45 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   UNIQUE KEY `email` (`email`),
   KEY `id_rol` (`id_rol`),
   CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`id_rol`) REFERENCES `roles` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table csss.usuarios: ~6 rows (approximately)
+-- Dumping data for table csss.usuarios: ~12 rows (approximately)
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
 INSERT INTO `usuarios` (`id`, `nombre`, `apellido`, `cedula`, `email`, `contraseña`, `id_rol`) VALUES
 	(1, 'Joseph', 'Cano', 'admin', 'admin@email.com', '$2y$10$24GsbyosJcY146/dh6nKPOujwHNgsYUiyh.jF5tADhP9R/9.RnbJK', 1),
-	(2, 'Joseph', 'Cano', '8-971-2154', 'joseph.cano@utp.ac.pa', '$2y$10$6gZ5w.VdnudkC.5kdbVnX.hvoP2lNZRra8UoqFIfan.HodzPDkfzq', 2),
 	(3, 'Yaneth', 'Caceres', '4-222-193', 'yaneth.caceres@css.pa', '$2y$10$24GsbyosJcY146/dh6nKPOujwHNgsYUiyh.jF5tADhP9R/9.RnbJK', 3),
 	(4, 'John', 'Stavros', '7-441-22', 'dobeh22641@d3ff.com', '$2y$10$bgMbTi0zKoXrK.semDYuMedY9y2LHDTnwhhFEgdCI4lrdOiBm6Y7y', 2),
 	(5, 'Peter', 'Park', '1-234-5678', 'peter.park@css.pa', '$2y$10$UViVtx.KJDgf2vgkkJsIjOrXIj.eDOjcTRmc150FDM2JMkSBiuC0.', 3),
-	(6, 'Joseph', 'Cano', '2-4681-01214', 'fogases220@ergowiki.com', '$2y$10$MVIoZf6Ei87Og9XpJLBr4uO/aYSJ1ZddEvMl2Glu4xrMuM5rQZN6a', 2);
+	(8, 'Bruce', 'Geene', '4-5121--798', 'hijibo1571@terasd.com', '$2y$10$zAoKNnDbD9q.sA7kx2glieKF90ViwA3Abpvqlcx58XgQBIfKry0Q6', 2),
+	(10, 'Joseph', 'Cano', '8-971-2154', 'joseph.cano@utp.ac.pa', '$2y$10$hkZQLV/ARI6pH5mAE9JYhOQqMHrI4kWdcq58vG401BZTf8wZPpwKS', 2),
+	(11, 'Elisse', 'Williams', '10-1112-1314', 'xajenop924@simdpi.com', '$2y$10$q.TG.pf62xHgfDn9duMLJegckDB0U3xi9m8NgiYHSvwrE8YeslGZC', 2),
+	(13, 'Lawrence', 'Santa', '9-899-9889', 'yijerew969@slvlog.com', '$2y$10$ydW78iJ6pXgvkczSJGRATOxTmRr4eIcGuu7GEEdwZmsO0svvgzXyC', 2),
+	(14, 'Matt', 'Peak', '2-0010-911', 'halkccbqyatp@xojxe.com', '$2y$10$gHuTfq2e08QTj7HoQu.8De.kU4NH6BTCVvyZux0SWvNhJp9M1cxkS', 2),
+	(15, 'Amy', 'Adams', '7-1244-6592', 'soroji1058@terasd.com', '$2y$10$f0sQqlX9hmjuLAWCRqXI/.eD4bw1eVuVV.3O/siYNc/TiOcf108ha', 2),
+	(16, 'Dude', 'Soup', '9-712-1548', 'jatojen779@simdpi.com', '$2y$10$jenbHq.SKuioNVfQIRHsHupbeIrd0Oj2A5swi3Zb4/V/WxmnaI48G', 2),
+	(17, 'Nick', 'Evers', '2-154-8971', 'yiyodow257@suggerin.com', '$2y$10$VvH/ChRH9D88gN3Zs57cLOKgS5W.HSh5U8JLf5L4UBoV3AKMLokny', 2);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
+
+-- Dumping structure for procedure csss.validar_recuperar_contraseña
+DELIMITER //
+CREATE DEFINER=`root`@`localhost` PROCEDURE `validar_recuperar_contraseña`(
+	IN `llave_in` VARCHAR(255)
+
+)
+BEGIN
+	SELECT usu.id, usu.cedula 
+	FROM recuperar_contraseña as rec
+	JOIN usuarios as usu on usu.id = rec.id_usuario
+	WHERE expira > NOW()
+	AND rec.llave = llave_in
+	LIMIT 1;
+END//
+DELIMITER ;
 
 -- Dumping structure for view csss.administrar_clinicas
 -- Removing temporary table and create final VIEW structure
 DROP TABLE IF EXISTS `administrar_clinicas`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` VIEW `administrar_clinicas` AS SELECT cli.id, cli.clinica, cor.corregimiento, dis.distrito, pro.provincia
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` VIEW `administrar_clinicas` AS SELECT cli.id, cli.clinica, cor.corregimiento, dis.distrito, pro.provincia, cli.id_corregimiento, cor.id_distrito, dis.id_provincia
 FROM clinicas as cli
 JOIN corregimientos as cor on cor.id = cli.id_corregimiento
 JOIN distritos as dis on dis.id = cor.id_distrito
@@ -924,7 +1056,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` VIEW `administrar_especial
 -- Removing temporary table and create final VIEW structure
 DROP TABLE IF EXISTS `administrar_medicos`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` VIEW `administrar_medicos` AS SELECT 
-	usu.id, usu.nombre, usu.apellido, usu.cedula, usu.email, usu.contraseña, esp.especialidad, cli.clinica, med.duracion_citas
+	usu.id, usu.nombre, usu.apellido, usu.cedula, usu.email, usu.contraseña, esp.especialidad, cli.clinica, med.duracion_citas, esp.id as id_especialidad, cli.id as id_clinica
 FROM usuarios AS usu 
 	JOIN medicos AS med ON usu.id = med.id_usuario
 	JOIN especialidades AS esp ON esp.id = med.id_especialidad
@@ -974,7 +1106,7 @@ JOIN clinicas as cli on cli.id = med.id_clinica ;
 -- Dumping structure for view csss.listar_medicos
 -- Removing temporary table and create final VIEW structure
 DROP TABLE IF EXISTS `listar_medicos`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` VIEW `listar_medicos` AS SELECT usu.id, CONCAT(usu.nombre, " ", usu.apellido) as nombre, usu.email, med.id_especialidad, med.id_clinica, med.duracion_citas
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` VIEW `listar_medicos` AS SELECT usu.id, CONCAT(usu.nombre, " ", usu.apellido) as nombre, usu.email, usu.cedula, med.id_especialidad, med.id_clinica, med.duracion_citas
 FROM usuarios as usu
 JOIN medicos as med on med.id_usuario = usu.id ;
 
