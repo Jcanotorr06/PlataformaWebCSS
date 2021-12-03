@@ -18,6 +18,51 @@
             }
         }
 
+        //Lista las provincias en las que hayan medicos existentes la base de datos
+        public function listarProvincias(){
+            $res = $this->db->query("Select * From provincias");
+            if($res->num_rows > 0){//Si la provincia tiene medicos...
+                while($provincia = $res->fetch_assoc()){
+                    $provincias[] = $provincia;
+                }
+                $this->db->close();
+                $this->db = Conexion::Conectar();
+                return $provincias;
+            }else{
+                return false;
+            }
+        }
+
+        //Lista los distritos en los que hayan medicos existentes en la base de datos
+        public function listarDistritos(){
+            $res = $this->db->query("Select * From distritos");
+            if($res->num_rows > 0){//Si el distrito tiene medicos...
+                while($distrito = $res->fetch_assoc()){
+                    $distritos[] = $distrito;
+                }
+                $this->db->close();
+                $this->db = Conexion::Conectar();
+                return $distritos;
+            }else{
+                return false;
+            }
+        }
+
+        //Lista los corregimientos en los que hayan medicos existentes en la base de datos
+        public function listarCorregimientos(){
+            $res = $this->db->query("Select * From corregimientos");
+            if($res->num_rows > 0){///Si el corregimientos tiene medicos...
+                while($corregimiento = $res->fetch_assoc()){
+                    $corregimientos[] = $corregimiento;
+                }
+                $this->db->close();
+                $this->db = Conexion::Conectar();
+                return $corregimientos;
+            }else{
+                return false;
+            }
+        }
+
         public function administrarMedicos(){
             $res = $this->db->query('Select * From administrar_medicos');
             if($res->num_rows > 0){
@@ -118,6 +163,61 @@
                 return true;
             }else{
                 echo $this->db->error;
+                return false;
+            }
+        }
+
+        public function añadirClinica($clinica, $id_corregimiento){
+            $res = $this->db->query("Insert Into clinicas(clinica, id_corregimiento) values('$clinica','$id_corregimiento');");
+            if($res){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        public function modificarClinica($id, $clinica, $id_corregimiento){
+            $res = $this->db->query("Call modificar_clinica('$id','$clinica','$id_corregimiento');");
+            if($res){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        public function eliminarClinica($id){
+            $res = $this->db->query("Delete From clinicas Where id = '$id'");
+            if($res){
+                return true;
+            }else{
+                echo $this->db->error;
+                return false;
+            }
+        }
+
+        public function añadirEspecialidad($especialidad){
+            $res = $this->db->query("Insert Into especialidades(especialidad) Values('$especialidad');");
+            if($res){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        public function modificarEspecialidad($id, $especialidad){
+            $res = $this->db->query("Call modificar_especialidad('$id','$especialidad');");
+            if($res){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        public function eliminarEspecialidad($id){
+            $res = $this->db->query("Delete From especialidades Where id = '$id';");
+            if($res){
+                return true;
+            }else{
                 return false;
             }
         }

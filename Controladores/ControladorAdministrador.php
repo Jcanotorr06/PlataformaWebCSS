@@ -34,6 +34,15 @@
 
         function especialidades(){
             $admin = new Modelo_Administrador();
+            if(isset($_POST['añadir'])){
+                $this->añadirEspecialidad();
+            }
+            if(isset($_POST['editar'])){
+                $this->modificarEspecialidad();
+            }
+            if(isset($_POST['eliminar'])){
+                $this->eliminarEspecialidad();
+            }
             if($especialidades = $admin->administrarEspecialidades()){
                 require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Administrador/especialidades.php';
             }else{
@@ -44,7 +53,16 @@
         
         function clinicas(){
             $admin = new Modelo_Administrador();
-            if($clinicas = $admin->administrarClinicas()){
+            if(isset($_POST['añadir'])){
+                $this->añadirClinica();
+            }
+            if(isset($_POST['editar'])){
+                $this->modificarClinica();
+            }
+            if(isset($_POST['eliminar'])){
+                $this->eliminarClinica();
+            }
+            if(($clinicas = $admin->administrarClinicas()) && ($provincias = $admin->listarProvincias()) && ($distritos = $admin->listarDistritos()) && ($corregimientos = $admin->listarCorregimientos())){
                 require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Administrador/clinicas.php';
             }else{
                 header('Location: /404');
@@ -110,10 +128,6 @@
             $admin = new Modelo_Administrador();
 
             if($admin->modificarMedico($id,$nombre, $apellido, $cedula, $email, $contraseña, $id_especialidad, $id_clinica, $duracion_citas)){
-/*                 require_once $_SERVER['DOCUMENT_ROOT'].'/Emails/enviar.php';
-                $body = file_get_contents($_SERVER['DOCUMENT_ROOT'].'/Emails/registro_exitoso.html');//Se convierte la plantilla html en una cadena de texto
-                enviarEmail($data['email'], 'Registro Exitoso', $body);//Se envia el correo */
-
                 $mensaje_exito = "Usuario modificado exitosamente";//Mensaje de exito a mostrar en el modal
                 require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Layouts/modal1Boton.php';//Se importa el modal
             }else{
@@ -155,10 +169,6 @@
             $admin = new Modelo_Administrador();
 
             if($admin->modificarPaciente($id,$nombre, $apellido, $cedula, $email, $contraseña)){
-/*                 require_once $_SERVER['DOCUMENT_ROOT'].'/Emails/enviar.php';
-                $body = file_get_contents($_SERVER['DOCUMENT_ROOT'].'/Emails/registro_exitoso.html');//Se convierte la plantilla html en una cadena de texto
-                enviarEmail($data['email'], 'Registro Exitoso', $body);//Se envia el correo */
-
                 $mensaje_exito = "Usuario modificado exitosamente";//Mensaje de exito a mostrar en el modal
                 require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Layouts/modal1Boton.php';//Se importa el modal
             }else{
@@ -179,5 +189,89 @@
                 require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Layouts/modal1Boton.php';//Se importa elm modal
             }
         }
+
+        public function añadirClinica(){
+            $clinica = $_POST['clinica'];
+            $id_corregimiento = $_POST['corregimiento'];
+
+            $admin = new Modelo_Administrador();
+            if($admin->añadirClinica($clinica, $id_corregimiento)){
+                $mensaje_exito = "Clinica creada exitosamente";
+                require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Layouts/modal1Boton.php';//Se importa el modal
+            }else{
+                $mensaje_error = "Ha ocurrido un error, por favor intentelo de nuevo.";//Mensaje de error a mostrar en el modal
+                require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Layouts/modal1Boton.php';//Se importa elm modal
+            }
+        }
+
+        public function modificarClinica(){
+            $id = $_POST['id'];
+            $clinica = $_POST['clinica'];
+            $id_corregimiento = $_POST['corregimiento'];
+
+            $admin = new Modelo_Administrador();
+            if($admin->modificarClinica($id, $clinica, $id_corregimiento)){
+                $mensaje_exito = "Clinica creada exitosamente";
+                require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Layouts/modal1Boton.php';//Se importa el modal
+            }else{
+                $mensaje_error = "Ha ocurrido un error, por favor intentelo de nuevo.";//Mensaje de error a mostrar en el modal
+                require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Layouts/modal1Boton.php';//Se importa elm modal
+            }
+        }
+
+        public function eliminarClinica(){
+            $id = $_POST['id'];
+
+            $admin = new Modelo_Administrador();
+            if($admin->eliminarClinica($id)){
+                $mensaje_exito = "Clinica eliminada exitosamente";
+                require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Layouts/modal1Boton.php';//Se importa el modal
+            }else{
+                $mensaje_error = "Ha ocurrido un error, por favor intentelo de nuevo.";//Mensaje de error a mostrar en el modal
+                require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Layouts/modal1Boton.php';//Se importa elm modal
+            }
+        }
+
+        public function añadirEspecialidad(){
+            $especialidad = $_POST['especialidad'];
+
+            $admin = new Modelo_Administrador();
+            if($admin->añadirEspecialidad($especialidad)){
+                $mensaje_exito = "Especialidad creada exitosamente";
+                require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Layouts/modal1Boton.php';//Se importa el modal
+            }else{
+                $mensaje_error = "Ha ocurrido un error, por favor intentelo de nuevo.";//Mensaje de error a mostrar en el modal
+                require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Layouts/modal1Boton.php';//Se importa elm modal
+            }
+        }
+
+        public function modificarEspecialidad(){
+            $id = $_POST['id'];
+            $especialidad = $_POST['especialidad'];
+
+            $admin = new Modelo_Administrador();
+            if($admin->modificarEspecialidad($id, $especialidad)){
+                $mensaje_exito = "Especialidad editada exitosamente";
+                require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Layouts/modal1Boton.php';//Se importa el modal
+            }else{
+                $mensaje_error = "Ha ocurrido un error, por favor intentelo de nuevo.";//Mensaje de error a mostrar en el modal
+                require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Layouts/modal1Boton.php';//Se importa elm modal
+            }
+        }
+
+        public function eliminarEspecialidad(){
+            $id = $_POST['id'];
+
+            $admin = new Modelo_Administrador();
+            if($admin->eliminarEspecialidad($id)){
+                $mensaje_exito = "Especialidad eliminada exitosamente";
+                require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Layouts/modal1Boton.php';//Se importa el modal
+            }else{
+                $mensaje_error = "Ha ocurrido un error, por favor intentelo de nuevo.";//Mensaje de error a mostrar en el modal
+                require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Layouts/modal1Boton.php';//Se importa elm modal
+            }
+        }
+
+        
     }
 ?>
