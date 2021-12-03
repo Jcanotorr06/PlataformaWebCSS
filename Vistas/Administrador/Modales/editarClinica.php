@@ -53,7 +53,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group py-3">
-                                    <button type="submit" name="editar" class="btn btn-dark">Añadir</button>
+                                    <button type="submit" name="editar" class="btn btn-dark">Enviar</button>
                                 </div>
                           </form>
                        </div>
