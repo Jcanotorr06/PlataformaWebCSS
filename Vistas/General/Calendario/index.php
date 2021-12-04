@@ -7,25 +7,24 @@
     </style>
 </head>
 
-<input type="text" class="d-none" id="dateInput" required name="fecha">
+<input type="hidden" id="dateInput" required name="fecha" value="">
 <div id="myCalendar" class="vanilla-calendar"></div>
 
 <script>
+    $('#dateInput').change(() => {
+        alert('VALUE CHANGED')
+    })
+    const dias_habiles_json = (<?php echo $dias_habiles_json?>)
 
     let pastDates = false, availableDates = false, availableWeekDays = true
-    
-    let calendar = new VanillaCalendar({
-        selector: "#myCalendar",
-        months: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Outubre", "Noviembre", "Diciembre"],
-        shortWeekday: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sáb'],
-        onSelect: (data) => {
-            document.getElementById('dateInput').value = data.date
-        },
-        pastDates: false,
-        availableWeekDays: [
-        {day: 'monday'},
-        {day: 'tuesday'}
-        ],
-        datesFilter: true
+    let days = [{day: 'sunday'},{day:'monday'},{day:'tuesday'},{day:'wednesday'},{day:'thursday'},{day:'friday'},{day:'saturday'},{day:'sunday'}]
+    //let workdays = FILTRAR EL ARREGLO days COMPARANDO CON LOS DÍAS HABILES DEL MEDICO EN LA DB
+    let filteredDays = [];
+    Object.keys(dias_habiles_json).map(id_dia=>{
+        filteredDays.push(days[id_dia-1])
     })
+
+
+    
+    
 </script>

@@ -22,6 +22,10 @@ h1{
     background-color: #0163AC;
 }
 
+.bg-light-gray{
+    background-color: #c5c5c5;
+}
+
 .mt-6{
     margin-top: 6rem;
 }

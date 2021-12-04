@@ -7,23 +7,26 @@
             
         }
 
+        //Funcion para la pantalla de inicio de un administrador
         function index(){
             $admin = new Modelo_Administrador();
-            $datos = $admin->listarDatosGenerales();
+            $datos = $admin->listarDatosGenerales();//Se buscan los datos generales
             require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Administrador/index.php';
         }
         
+        //Funcion para la pantalla de administración de medicos
         function medicos(){
             $admin = new Modelo_Administrador();
-            if(isset($_POST['añadir'])){
+            if(isset($_POST['añadir'])){//Si se envia la señal para añadir...
                 $this->añadirMedico();
             }
-            if(isset($_POST['editar'])){
+            if(isset($_POST['editar'])){//Si se envia la señal para editar...
                 $this->modificarMedico();
             }
-            if(isset($_POST['eliminar'])){
+            if(isset($_POST['eliminar'])){//Si se envia la señal para eliminar...
                 $this->eliminarUsuario();
             }
+            //Si hay medicos especialidades y clinicas en el sistema...
             if(($medicos = $admin->administrarMedicos()) && ($especialidades = $admin->administrarEspecialidades()) && ($clinicas = $admin->administrarClinicas())){
                 require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Administrador/medicos.php';
             }else{
@@ -32,17 +35,19 @@
             }
         }
 
+        //Funcion para la pantalla de administación de especialidades
         function especialidades(){
             $admin = new Modelo_Administrador();
-            if(isset($_POST['añadir'])){
+            if(isset($_POST['añadir'])){//Si se envia la señal para añadir...
                 $this->añadirEspecialidad();
             }
-            if(isset($_POST['editar'])){
+            if(isset($_POST['editar'])){//Si se envia la señal para editar...
                 $this->modificarEspecialidad();
             }
-            if(isset($_POST['eliminar'])){
+            if(isset($_POST['eliminar'])){//Si se envia la señal para eliminar...
                 $this->eliminarEspecialidad();
             }
+            //Si hay especialidades existentes en el sistema...
             if($especialidades = $admin->administrarEspecialidades()){
                 require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Administrador/especialidades.php';
             }else{
@@ -51,17 +56,19 @@
             }
         }
         
+        //Funcion para la pantalla de administración de clinicas
         function clinicas(){
             $admin = new Modelo_Administrador();
-            if(isset($_POST['añadir'])){
+            if(isset($_POST['añadir'])){//Si se envia la señal para añadir...
                 $this->añadirClinica();
             }
-            if(isset($_POST['editar'])){
+            if(isset($_POST['editar'])){//Si se envia la señal para editar...
                 $this->modificarClinica();
             }
-            if(isset($_POST['eliminar'])){
+            if(isset($_POST['eliminar'])){//Si se envia la señal para eliminar...
                 $this->eliminarClinica();
             }
+            //Si hay clinicas provincias distritos y corregimientos existentes en el sistema...
             if(($clinicas = $admin->administrarClinicas()) && ($provincias = $admin->listarProvincias()) && ($distritos = $admin->listarDistritos()) && ($corregimientos = $admin->listarCorregimientos())){
                 require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Administrador/clinicas.php';
             }else{
@@ -70,17 +77,19 @@
             }
         }
         
+        //Funcion para la pagina de administracion de pacientes
         function pacientes(){
             $admin = new Modelo_Administrador();
-            if(isset($_POST['añadir'])){
+            if(isset($_POST['añadir'])){//Si se envia la señal para añadir...
                 $this->añadirPaciente();
             }
-            if(isset($_POST['editar'])){
+            if(isset($_POST['editar'])){//Si se envia la señal para editar...
                 $this->modificarPaciente();
             }
-            if(isset($_POST['eliminar'])){
+            if(isset($_POST['eliminar'])){//Si se envia la señal para eliminar...
                 $this->eliminarUsuario();
             }
+            //Si hay pacientes existentes en el sistema...
             if($pacientes = $admin->administrarPacientes()){
                 require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Administrador/pacientes.php';
             }else{
@@ -89,6 +98,7 @@
             }
         }
 
+        //Funcion que permite añadir un medico
         public function añadirMedico(){
             $nombre = $_POST['nombre'];
             $apellido = $_POST['apellido'];
@@ -114,6 +124,7 @@
             }
         }
 
+        //Funcion que permite modificar un medico
         public function modificarMedico(){
             $id = $_POST['id'];
             $nombre = $_POST['nombre'];
@@ -136,6 +147,7 @@
             }
         }
 
+        //Funcion que permite añadir un paciente
         public function añadirPaciente(){
             $nombre = $_POST['nombre'];
             $apellido = $_POST['apellido'];
@@ -158,6 +170,7 @@
             }
         }
 
+        //Funcion que permite modificar un paciente
         public function modificarPaciente(){
             $id = $_POST['id'];
             $nombre = $_POST['nombre'];
@@ -177,6 +190,7 @@
             }
         }
 
+        //Funcion que permite eliminar un usuario
         public function eliminarUsuario(){
             $id = $_POST['id'];
 
@@ -190,6 +204,7 @@
             }
         }
 
+        //Funcion que permite añadir una clinica
         public function añadirClinica(){
             $clinica = $_POST['clinica'];
             $id_corregimiento = $_POST['corregimiento'];
@@ -204,6 +219,7 @@
             }
         }
 
+        //Funcion que permite modificar una clinica
         public function modificarClinica(){
             $id = $_POST['id'];
             $clinica = $_POST['clinica'];
@@ -219,6 +235,7 @@
             }
         }
 
+        //Funcion que permite eliminar una clinica
         public function eliminarClinica(){
             $id = $_POST['id'];
 
@@ -232,6 +249,7 @@
             }
         }
 
+        //Funcion que permite añadir una especialidad
         public function añadirEspecialidad(){
             $especialidad = $_POST['especialidad'];
 
@@ -245,6 +263,7 @@
             }
         }
 
+        //Funcion que permite modificar una especialidad
         public function modificarEspecialidad(){
             $id = $_POST['id'];
             $especialidad = $_POST['especialidad'];
@@ -259,6 +278,7 @@
             }
         }
 
+        //Funcion que permite eliminar una especialidad
         public function eliminarEspecialidad(){
             $id = $_POST['id'];
 

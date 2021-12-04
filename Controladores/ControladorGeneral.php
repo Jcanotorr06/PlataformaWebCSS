@@ -1,17 +1,8 @@
 <?php
     require_once $_SERVER['DOCUMENT_ROOT'].'/Modelos/Modelo_General.php';//Se importa el modelo de inicio
 
-    class test{
-        public $nombre;
-
-        function __construct($nombre){
-            $this->nombre = $nombre;
-        }
-    }
-
     //Controlador que maneja los metodos correspondientes a un usuario paciente o medico
     abstract class ControladorGeneral{
-        public $test;
         function __construct(){
             
         }
@@ -39,8 +30,11 @@
 
         //Funcion para mostrar las paginas de agendar cita 
         function agendar(){
-            if(isset($_POST['siguiente'])){
-                $this->test = new test('fuck');
+            if(isset($_POST['agendar']) || isset($_POST['agendar2'])){
+                $this->agendarCita();
+            }
+            if(isset($_POST['siguiente']) || isset($_POST['medico'])){
+                $this->listarHorasHabiles();
             }else{
                 $general = new Modelo_General();
                 $provincias = $general->listarProvincias();
@@ -49,10 +43,10 @@
                 $clinicas = $general->listarClinicas();
                 $especialidades = $general->listarEspecialidades();
                 $medicos = $general->listarMedicos();
+                require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/General/agendar.php';
             }
             //Se importa la pagina de agendar citas
-            require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/General/agendar.php';
-         }
+        }
 
 
          //Funcion que envía correo para notificar cancelacion de la cita a pacientes y medicos
@@ -86,6 +80,49 @@
                 enviarEmail($email_medico, 'Cita Cancelada', $body_medico);
             }
          }
+
+         public function listarHorasHabiles(){
+            $id_medico = $_POST['medico'];
+            $general = new Modelo_General();
+
+            if($semana = $general->listarHorasHabiles($id_medico)){
+                $duracion =  $semana[0]['duracion_citas'];
+                foreach($semana as $dia){
+                    $id_dia = $dia['id_dia'];
+                    $hora_entrada = strtotime($dia['hora_entrada']);
+                    $hora_salida = strtotime($dia['hora_salida']);
+                    $horas_habiles = array();
+                    while($hora_entrada < $hora_salida){
+                        $horas_habiles[] = date('H:i:s', $hora_entrada);
+                        $hora_entrada = $hora_entrada + $duracion*60;
+                    }
+                    $dias_habiles[$id_dia] = $horas_habiles;
+                }
+                $dias_habiles_json = json_encode($dias_habiles);
+                
+                require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/General/agendar2.php';
+            }else{
+                header('Location: /?err=4');
+                exit();
+            }
+         }
+
+         public function agendarCita(){
+            $data['id_usuario'] = $_SESSION['id'];
+            $data['id_medico'] = $_POST['medico'];
+            $data['fecha'] = $_POST['fecha'];
+            $data['hora'] = $_POST['hora'];
+
+            $general = new Modelo_General();
+            if($general->agendarCita($data)){
+                echo "<script>window.setTimeout(()=>{window.location.href = '/'},5000)</script>";
+                $mensaje_exito = 'Cita agendada exitosamente. Redirigiendo a la pagina de inicio';
+                require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Layouts/modal1Boton.php';//Se importa elm modal
+            }else{
+                $mensaje_error = 'Fecha y hora no disponible. Por favor intentelo de nuevo.';
+                require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Layouts/modal1Boton.php';//Se importa elm modal
+            }
+        }
     }
 
 ?>

@@ -8,6 +8,7 @@
             $this->db = Conexion::Conectar();
         }
 
+        //Lista un resumen de los datos generales en el sistema
         public function listarDatosGenerales(){
             $res = $this->db->query('Select * From datos_generales');
             if($res->num_rows > 0){
@@ -63,6 +64,7 @@
             }
         }
 
+        //Lista la información de los medicos
         public function administrarMedicos(){
             $res = $this->db->query('Select * From administrar_medicos');
             if($res->num_rows > 0){
@@ -77,6 +79,7 @@
             }
         }
 
+        //Lista las especialidades
         public function administrarEspecialidades(){
             $res = $this->db->query('Select * From administrar_especialidades');
             if($res->num_rows > 0){
@@ -91,6 +94,7 @@
             }
         }
 
+        //Lista la informacion de las clinicas
         public function administrarClinicas(){
             $res = $this->db->query('Select * From administrar_clinicas');
             if($res->num_rows > 0){
@@ -105,6 +109,7 @@
             }
         }
         
+        //Lista la informacion de los pacientes
         public function administrarPacientes(){
             $res = $this->db->query('Select * From administrar_pacientes');
             if($res->num_rows > 0){
@@ -119,6 +124,7 @@
             }
         }
 
+        //Inserta un medico
         public function añadirMedico($nombre, $apellido, $cedula, $email, $contraseña, $id_especialidad, $id_clinica, $duracion_citas){
             $res = $this->db->query("Call añadir_medico('$nombre','$apellido','$cedula','$email','$contraseña',$id_especialidad,$id_clinica,$duracion_citas);");
             if($res){
@@ -128,6 +134,7 @@
             }
         }
 
+        //Modifica la informacion de un medico existente
         public function modificarMedico($id, $nombre, $apellido, $cedula, $email, $contraseña, $id_especialidad, $id_clinica, $duracion_citas){
             $res = $this->db->query("Call modificar_medico('$id','$nombre','$apellido','$cedula','$email','$contraseña',$id_especialidad,$id_clinica,$duracion_citas);");
             if($res){
@@ -138,6 +145,7 @@
             }
         }
 
+        //Inserta un paciente
         public function añadirPaciente($nombre, $apellido, $cedula, $email, $contraseña){
             $res = $this->db->query("Call crear_usuario('$nombre','$apellido','$cedula','$email','$contraseña');");
             if($res){
@@ -147,6 +155,7 @@
             }
         }
 
+        //Modifica la informacion de un paciente existente
         public function modificarPaciente($id, $nombre, $apellido, $cedula, $email, $contraseña){
             $res = $this->db->query("Call modificar_paciente('$id','$nombre','$apellido','$cedula','$email','$contraseña');");
             if($res){
@@ -157,6 +166,7 @@
             }
         }
 
+        //Elimina un usuario del sistema
         public function eliminarUsuario($id){
             $res = $this->db->query("Delete From usuarios Where id = '$id'");
             if($res){
@@ -167,6 +177,7 @@
             }
         }
 
+        //Añade una clinica
         public function añadirClinica($clinica, $id_corregimiento){
             $res = $this->db->query("Insert Into clinicas(clinica, id_corregimiento) values('$clinica','$id_corregimiento');");
             if($res){
@@ -176,6 +187,7 @@
             }
         }
 
+        //Modifica la informacion de una clinica existente
         public function modificarClinica($id, $clinica, $id_corregimiento){
             $res = $this->db->query("Call modificar_clinica('$id','$clinica','$id_corregimiento');");
             if($res){
@@ -185,6 +197,7 @@
             }
         }
 
+        //Elimina una clinica
         public function eliminarClinica($id){
             $res = $this->db->query("Delete From clinicas Where id = '$id'");
             if($res){
@@ -195,6 +208,7 @@
             }
         }
 
+        //Añade una especialidad
         public function añadirEspecialidad($especialidad){
             $res = $this->db->query("Insert Into especialidades(especialidad) Values('$especialidad');");
             if($res){
@@ -204,6 +218,7 @@
             }
         }
 
+        //Modifica una especialidad existente
         public function modificarEspecialidad($id, $especialidad){
             $res = $this->db->query("Call modificar_especialidad('$id','$especialidad');");
             if($res){
@@ -213,6 +228,7 @@
             }
         }
 
+        //Elimina una especialidad
         public function eliminarEspecialidad($id){
             $res = $this->db->query("Delete From especialidades Where id = '$id';");
             if($res){

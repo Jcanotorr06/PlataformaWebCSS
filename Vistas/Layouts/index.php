@@ -14,9 +14,7 @@
     <style>
         <?php 
             if(isset($_SESSION['rol'])){
-                if($_SESSION['rol'] == 'admin'){
-                    include_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Administrador/Inicio.css';
-                }else{
+                if($_SESSION['rol'] != 'admin'){
                     include_once $_SERVER['DOCUMENT_ROOT']."/Vistas/Layouts/styles.css";
                 }
             }else{

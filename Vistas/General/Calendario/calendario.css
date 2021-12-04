@@ -137,7 +137,7 @@
 }
 
 .vanilla-calendar .vanilla-calendar-date--today {
-    background-color: var(--vanilla-calendar-today-bg-color);
+    background-color: rgba(204, 204, 204, 0.438);
     color: #000 !important;
 }
 
