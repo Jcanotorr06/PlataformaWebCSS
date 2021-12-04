@@ -98,6 +98,7 @@
         </section>
     </form>
 </main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script>
     const activarSubmit = () => {
         if(document.getElementById('timeInput').value && document.getElementById('dateInput').value){
@@ -148,7 +149,7 @@
                 if(id_dia == idSelectedDay) {
                     dias_habiles_json[id_dia].map((hora, i) =>{
                         document.getElementsByClassName("radioButton")[i].value = hora
-                        let horaFormat = new Date('1999-01-01T' + hora + 'Z').toLocaleTimeString('en-US', {hour12:true, hour:'numeric',minute:'numeric'})
+                        let horaFormat = moment(hora, 'hh:mm A').format('hh:mm A')
                         document.getElementsByClassName('radioLabel')[i].innerHTML = horaFormat
                     })
                 }

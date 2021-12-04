@@ -27,11 +27,26 @@
         //Utiliza el procedimiento almacenado agendar_cita para agendar una cita
         //Parametro  $data, debe ser un arreglo con los elementos id_usuario, id_medico, fecha, hora y duracion
         public function agendarCita($data){
-            $res = $this->db->query("Call agendar_cita('".$data['id_usuario']."','".$data['id_medico']."','".$data['fecha']."','".$data['hora']."')");
-            if($res){
-                return true;
+            if($this->validarCitaDisponible($data)){
+                $res = $this->db->query("Call agendar_cita('".$data['id_usuario']."','".$data['id_medico']."','".$data['fecha']."','".$data['hora']."')");
+                if($res){
+                    return true;
+                }else{
+                    return false;
+                }
             }else{
                 return false;
+            }
+        }
+
+        public function validarCitaDisponible($data){
+            $res = $this->db->query("Select * From citas Where id_medico='".$data['id_medico']."' And hora='".$data['hora']."' And fecha='".$data['fecha']."';");
+            if($res->num_rows > 0){
+                return false;
+            }else{
+                $this->db->close();
+                $this->db = Conexion::Conectar();
+                return true;
             }
         }
 
