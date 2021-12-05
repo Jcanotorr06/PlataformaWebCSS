@@ -1,5 +1,5 @@
 <head>
-    <title>Agendar Cita | Plataforma Web Css</title>
+    <title>Reprogramar Cita | Plataforma Web Css</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 </head>
 <main class=" container-fluid h-100 flex-grow-1">

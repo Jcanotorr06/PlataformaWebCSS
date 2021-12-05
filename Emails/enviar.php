@@ -10,14 +10,14 @@ $mail = new PHPMailer(true);
 
 try { 
     $mail->isSMTP();                                            
-    $mail->Host       = 'in-v3.mailjet.com';                     
+    $mail->Host       = 'smtp-relay.sendinblue.com';                     
     $mail->SMTPAuth   = true;                                   
-    $mail->Username   = '745fbf69394d2557cb6ff626db9eb6a2';                     
-    $mail->Password   = 'd506b0053aee5304daf906a3930286c6';           
+    $mail->Username   = 'defienema@gmail.com';                     
+    $mail->Password   = 'cVKAs8g3m5wprRN0';           
     $mail->Port       = 587;                                    
 
     
-    $mail->setFrom('yijerew969@slvlog.com', 'Mailer');
+    $mail->setFrom('defienema@gmail.com', 'Allan Carr');
     $mail->addAddress($to);     
 
     
