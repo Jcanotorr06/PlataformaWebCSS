@@ -129,12 +129,12 @@ CREATE TABLE IF NOT EXISTS `citas` (
   CONSTRAINT `citas_ibfk_3` FOREIGN KEY (`id_estado`) REFERENCES `estados` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table csss.citas: ~2 rows (approximately)
+-- Dumping data for table csss.citas: ~3 rows (approximately)
 /*!40000 ALTER TABLE `citas` DISABLE KEYS */;
 INSERT INTO `citas` (`id`, `id_usuario`, `id_medico`, `fecha`, `hora`, `id_estado`) VALUES
-	(8, 10, 3, '2022-01-11', '14:00:00', 1),
+	(8, 10, 3, '2022-01-27', '17:00:00', 1),
 	(10, 10, 5, '2022-02-10', '19:00:00', 1),
-	(11, 10, 5, '2021-12-20', '14:00:00', 1);
+	(11, 10, 5, '2022-01-12', '07:00:00', 1);
 /*!40000 ALTER TABLE `citas` ENABLE KEYS */;
 
 -- Dumping structure for table csss.clinicas
@@ -708,9 +708,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `listar_citas_medico`(
 
 
 
+
 )
 BEGIN
-	SELECT cit.id, CONCAT(us.nombre, " ",us.apellido) as nombre_paciente, us.cedula as cedula_paciente, lm.nombre as nombre_medico, lm.cedula as cedula_medico, esp.especialidad, cit.fecha, TIME_FORMAT(cit.hora, "%r") as hora, med.duracion_citas as duracion, pro.provincia, dis.distrito, cor.corregimiento, cli.clinica
+	SELECT cit.id, CONCAT(us.nombre, " ",us.apellido) as nombre_paciente, us.cedula as cedula_paciente, lm.id as id_medico, lm.nombre as nombre_medico, lm.cedula as cedula_medico, esp.especialidad, cit.fecha, TIME_FORMAT(cit.hora, "%r") as hora, med.duracion_citas as duracion, pro.provincia, dis.distrito, cor.corregimiento, cli.clinica
 	FROM citas AS cit
 	JOIN usuarios AS us ON us.id = cit.id_usuario
 	JOIN medicos AS med ON med.id_usuario = cit.id_medico
@@ -736,9 +737,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `listar_citas_paciente`(
 
 
 
+
 )
 BEGIN
-	SELECT cit.id, CONCAT(us.nombre, " ",us.apellido) as nombre_paciente, us.cedula as cedula_paciente, lm.nombre as nombre_medico, lm.cedula as cedula_medico, esp.especialidad, cit.fecha, TIME_FORMAT(cit.hora, "%r") as hora, pro.provincia, dis.distrito, cor.corregimiento, cli.clinica
+	SELECT cit.id, CONCAT(us.nombre, " ",us.apellido) as nombre_paciente, us.cedula as cedula_paciente, lm.id as id_medico, lm.nombre as nombre_medico, lm.cedula as cedula_medico, esp.especialidad, cit.fecha, TIME_FORMAT(cit.hora, "%r") as hora, pro.provincia, dis.distrito, cor.corregimiento, cli.clinica
 	FROM citas AS cit
 	JOIN usuarios AS us ON us.id = cit.id_usuario
 	JOIN medicos AS med ON med.id_usuario = cit.id_medico
@@ -977,6 +979,22 @@ INSERT INTO `recuperar_contraseña` (`id_usuario`, `llave`, `expira`) VALUES
 	(10, 'e30f2af599d706a29a5d620d11c582bad333a1c68918f37ef9b6f7404f3876b2', '2021-12-02 15:32:01'),
 	(17, '1389821668fdfea624a22efbdcace2012fce815fc92946d16571fb07966e1982', '2021-12-02 06:35:18');
 /*!40000 ALTER TABLE `recuperar_contraseña` ENABLE KEYS */;
+
+-- Dumping structure for procedure csss.reprogramar_cita
+DELIMITER //
+CREATE DEFINER=`root`@`localhost` PROCEDURE `reprogramar_cita`(
+	IN `id_in` INT,
+	IN `fecha_in` DATE,
+	IN `hora_in` TIME
+)
+BEGIN
+	UPDATE citas
+	SET
+		fecha = fecha_in,
+		hora = hora_in
+	WHERE id = id_in;
+END//
+DELIMITER ;
 
 -- Dumping structure for table csss.roles
 CREATE TABLE IF NOT EXISTS `roles` (
