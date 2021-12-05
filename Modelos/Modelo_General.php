@@ -39,6 +39,23 @@
             }
         }
 
+        //Utiliza el procedimiento almacenado reprogramar_cita para reprogramar una cita
+        //Parametro $data, depe ser un arreglo asociativo con los elementos id_cita, fecha y hora
+        public function reprogramarCita($data){
+            if($this->validarCitaDisponible($data)){
+                $res = $this->db->query("Call reprogramar_cita('".$data['id_cita']."','".$data['fecha']."','".$data['hora']."')");
+                if($res){
+                    return true;
+                }else{
+                    return false;
+                }
+            }else{
+                return false;
+            }
+        }
+
+        //Funcion valida que un medico no tenga citas existentes en ciertasfecha y hora
+        //Parametro $data, es un arreglo asociativo con los elementos id_medico, hora y fecha
         public function validarCitaDisponible($data){
             $res = $this->db->query("Select * From citas Where id_medico='".$data['id_medico']."' And hora='".$data['hora']."' And fecha='".$data['fecha']."';");
             if($res->num_rows > 0){
@@ -153,6 +170,7 @@
             }
         }
 
+        //Lista las horas habiles de un medico
         public function listarHorasHabiles($id_medico){
             $res = $this->db->query("Call listar_horas_habiles('$id_medico');");
             if($res->num_rows > 0){

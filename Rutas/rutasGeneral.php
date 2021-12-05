@@ -1,6 +1,6 @@
 <?php
     //Maneja las rutas validas para un usuario con el rol de paciente o medico
-    $rutas = array('', '/', '/agendar', '/404');
+    $rutas = array('', '/', '/agendar', '/reprogramar', '/404');
     if(in_array($accion, $rutas)){//Si la ruta a la que accede el usuario existe...
         require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Layouts/navbar.php';//Se incluye la barra de navegacion
     };
@@ -11,6 +11,10 @@
             break;
         case '/agendar':{
             $controlador->agendar();
+            break;
+        }
+        case '/reprogramar':{
+            $controlador->reprogramar();
             break;
         }
         case '/404':

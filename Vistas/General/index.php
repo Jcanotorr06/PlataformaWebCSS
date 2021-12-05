@@ -22,7 +22,7 @@
             </thead>
             <tbody>
                 <?php foreach($citas as $cita):?>
-                    <?php echo '<tr data-bs-toggle="modal" data-bs-target="#modalCita" data-bs-id="'.$cita['id'].'" data-bs-paciente="'.$cita['nombre_paciente'].'" data-bs-cedula="'.$cita['cedula_paciente'].'" data-bs-medico="'.$cita['nombre_medico'].'" data-bs-cedula-medico="'.$cita['cedula_medico'].'" data-bs-especialidad="'.$cita['especialidad'].'" data-bs-fecha="'.$cita['fecha'].'" data-bs-hora="'.$cita['hora'].'" data-bs-clinica="'.$cita['clinica'].'" data-bs-corregimiento="'.$cita['corregimiento'].'" data-bs-distrito="'.$cita['distrito'].'" data-bs-provincia="'.$cita['provincia'].'">'?>
+                    <?php echo '<tr data-bs-toggle="modal" data-bs-target="#modalCita" data-bs-id="'.$cita['id'].'" data-bs-paciente="'.$cita['nombre_paciente'].'" data-bs-cedula="'.$cita['cedula_paciente'].'" data-bs-id-medico="'.$cita['id_medico'].'" data-bs-medico="'.$cita['nombre_medico'].'" data-bs-cedula-medico="'.$cita['cedula_medico'].'" data-bs-especialidad="'.$cita['especialidad'].'" data-bs-fecha="'.$cita['fecha'].'" data-bs-hora="'.$cita['hora'].'" data-bs-clinica="'.$cita['clinica'].'" data-bs-corregimiento="'.$cita['corregimiento'].'" data-bs-distrito="'.$cita['distrito'].'" data-bs-provincia="'.$cita['provincia'].'">'?>
                         <td><?php echo $cita['fecha']?></td>
                         <td><?php echo $cita['hora']?></td>
                         <td><?php echo $cita['clinica']?></td>
@@ -102,9 +102,13 @@
             <div class="w-100">
                 <button type="button" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#modalCancelar" name="cancelar" class="btn btn-danger rounded-pill w-100 py-2">Cancelar</button>
             </div>
-            <div class="w-100">
-                <a href="/reprogramar"  class="btn text-white btn-primary rounded-pill w-100 py-2">Reprogramar</a>
-            </div>
+            <form action="/reprogramar" method="post" class="w-100">
+                <input type="hidden" name="id_cita" id="reprogramar_id_cita">
+                <input type="hidden" name="id_medico" id="reprogramar_id_medico">
+                <input type="hidden" name="fecha" id="reprogramar_fecha">
+                <input type="hidden" name="hora" id="reprogramar_hora">
+                <button type="submit" name="submit" class="btn text-white btn-primary rounded-pill w-100 py-2">Reprogramar</button>
+            </form>
         </div>
     </div>
   </div>
@@ -136,13 +140,17 @@
 
 
 <script>
-    let citas = (<?php echo($citas_json)?>)
+    let citas = (<?php echo($citas_json)?>)//Se importa la variable $citas_json a javascript
     let modal = document.getElementById('modalCita')
+
+    //Cuando se selecciona una cita...
     modal.addEventListener('show.bs.modal', (e) =>{
         let cita = e.relatedTarget
+        //Se obtienen los valores de la cita seleccionada
         let id = cita.getAttribute('data-bs-id')
         let paciente = cita.getAttribute('data-bs-paciente')
         let cedula = cita.getAttribute('data-bs-cedula')
+        let id_medico = cita.getAttribute('data-bs-id-medico')
         let medico = cita.getAttribute('data-bs-medico')
         let cedula_medico = cita.getAttribute('data-bs-cedula-medico')
         let especialidad = cita.getAttribute('data-bs-especialidad')
@@ -153,6 +161,7 @@
         let distrito = cita.getAttribute('data-bs-distrito')
         let provincia = cita.getAttribute('data-bs-provincia')
         
+        //Se establecen los valores a enviar si se selecciona cancelar la cita seleccionada
         document.getElementById('modal-id-cita').value = id
         document.getElementById('modal-ced-pac').value = cedula
         document.getElementById('modal-nom-pac').value = paciente
@@ -160,6 +169,14 @@
         document.getElementById('modal-nom-med').value = medico
         document.getElementById('modal-fecha').value = fecha
         document.getElementById('modal-esp').value = especialidad
+
+        //Se establecen los valores a enviar si se selecciona reprogramar la cita seleccionada
+        document.getElementById('reprogramar_id_cita').value = id
+        document.getElementById('reprogramar_id_medico').value = id_medico
+        document.getElementById('reprogramar_fecha').value = fecha
+        document.getElementById('reprogramar_hora').value = hora
+
+        //Se establecen el contenido en el modal de detalles de cita
         modal.querySelector('.modal-paciente').textContent = paciente
         modal.querySelector('.modal-cedula').textContent = cedula
         modal.querySelector('.modal-medico').textContent = medico
@@ -169,6 +186,7 @@
         modal.querySelector('.modal-direccion').textContent = `${provincia}, ${distrito}, ${corregimiento}, ${clinica}`
     })
 
+    //Se inicializa una nueva tabla
     let table = new DataTable('#example', {
         "pageLength": 10,
         "searching": false,
@@ -184,6 +202,4 @@
             }
         }
     });
-/*     document.getElementById('example_paginate').getElementsByClassName('previous')[0].innerHTML = "← anterior"
-    document.getElementById('example_paginate').getElementsByClassName('next')[0].innerHTML = "siguiente →" */
 </script>
