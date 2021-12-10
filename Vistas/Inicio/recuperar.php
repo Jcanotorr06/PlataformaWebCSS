@@ -14,8 +14,9 @@
             <h2 class="text-center my-4 text-muted d-none d-lg-block">Recuperar Contraseña</h2><!-- Titulo invisible en pantallas pequeñas -->
             
             <?php if(isset($usuario)): ?>
-                <!-- Formulario de inicio invisible en pantallas grandes -->
+                <!-- Formulario de cambio de contraseña invisible en pantallas grandes -->
                 <form method="post" class="w-100 d-flex flex-column align-items-center px-md-5 px-3 d-lg-none">
+                    <?php echo '<input name="cedula" required type="hidden" value="'.$usuario.'">' ?>
                     <div class="form-floating my-3 w-100">
                         <input name="cedula" required type="text" disabled class="form-control" placeholder="00-0000-00000">
                         <label><?php echo $usuario ?></label>
@@ -28,7 +29,7 @@
                     <button type="submit" name="cambiar" class="btn btn-lg btn-primary rounded-pill fw-bold w-50 my-4 py-3 d-none d-md-block">Cambiar Contraseña</button>
                 </form>
 
-            <!-- Formulario de inicio invisible en pantallas pequeñas -->
+            <!-- Formulario de cambio de contraseña invisible en pantallas pequeñas -->
                 <form method="post" class="w-75 flex-column align-items-center px-3 d-none d-lg-flex">
                     <?php echo '<input name="cedula" required type="hidden" value="'.$usuario.'">' ?>
                     <div class="form-floating my-3 w-100">
@@ -43,9 +44,8 @@
                 </form>
 
             <?php else: ?>
-            <!-- Formulario de inicio invisible en pantallas grandes -->
+            <!-- Formulario de recuperacion invisible en pantallas grandes -->
                 <form method="post" class="w-100 d-flex flex-column align-items-center px-md-5 px-3 d-lg-none">
-                    <?php echo '<input name="cedula" required type="hidden" value="'.$usuario.'">' ?>
                     <div class="form-floating my-3 w-100">
                         <input type="text" class="form-control" placeholder="00-0000-00000">
                         <label>Cedula</label>
@@ -54,7 +54,7 @@
                     <button type="submit" name="recuperar" class="btn btn-lg btn-primary rounded-pill fw-bold w-50 my-4 py-3 d-none d-md-block">Enviar</button>
                 </form>
 
-            <!-- Formulario de inicio invisible en pantallas pequeñas -->
+            <!-- Formulario de recuperacion invisible en pantallas pequeñas -->
                 <form method="post" class="w-75 flex-column align-items-center px-3 d-none d-lg-flex">
                     <div class="form-floating my-3 w-100">
                         <input name="cedula" required type="text" class="form-control" placeholder="00-0000-00000">
