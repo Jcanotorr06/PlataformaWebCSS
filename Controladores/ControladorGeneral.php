@@ -166,8 +166,8 @@
 
             $general = new Modelo_General();
             if($general->agendarCita($data)){//Si se agendó la cita exitosamente...
-                $email_paciente = $general->BuscarEmail($data['id_usuario']);
-                $email_medico = $general->BuscarEmail($data['id_medico']);
+                $paciente = $general->BuscarEmail($data['id_usuario']);
+                $medico = $general->BuscarEmail($data['id_medico']);
 
                 //Se importa la plantilla de citas agendadas
                 $body_paciente = $body_medico = file_get_contents($_SERVER['DOCUMENT_ROOT'].'/Emails/cita_agendada.html');
@@ -180,8 +180,8 @@
                 require_once $_SERVER['DOCUMENT_ROOT'].'/Emails/enviar.php';
 
                 //Se envian ambos correos
-                enviarEmail($email_paciente, 'Cita Agendada', $body_paciente);
-                enviarEmail($email_medico, 'Cita Agendada', $body_medico);
+                enviarEmail($paciente['email'], 'Cita Agendada', $body_paciente);
+                enviarEmail($medico['email'], 'Cita Agendada', $body_medico);
 
                 //Se redirige en 3 segundos con javascript
                 echo "<script>window.setTimeout(()=>{window.location.href = '/'},3000)</script>";
@@ -203,8 +203,8 @@
 
             $general = new Modelo_General();
             if($general->reprogramarCita($data)){//Si se reprogramó la cita exitosamente...
-                $email_paciente = $general->BuscarEmail($data['id_usuario']);
-                $email_medico = $general->BuscarEmail($data['id_medico']);
+                $paciente = $general->BuscarEmail($data['id_usuario']);
+                $medico = $general->BuscarEmail($data['id_medico']);
 
                 //Se importa la plantilla de citas reprogramadas
                 $body_paciente = $body_medico = file_get_contents($_SERVER['DOCUMENT_ROOT'].'/Emails/cita_reprogramada.html');
@@ -217,8 +217,8 @@
                 require_once $_SERVER['DOCUMENT_ROOT'].'/Emails/enviar.php';
 
                 //Se envian ambos correos
-                enviarEmail($email_paciente, 'Cita Reprogramada', $body_paciente);
-                enviarEmail($email_medico, 'Cita Reprogramada', $body_medico);
+                enviarEmail($paciente['email'], 'Cita Reprogramada', $body_paciente);
+                enviarEmail($medico['email'], 'Cita Reprogramada', $body_medico);
                 
                 //Se redirige en 3 segundos con javascript
                 echo "<script>window.setTimeout(()=>{window.location.href = '/'},3000)</script>";
