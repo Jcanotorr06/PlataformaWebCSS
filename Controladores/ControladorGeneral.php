@@ -203,7 +203,7 @@
 
             $general = new Modelo_General();
             if($general->reprogramarCita($data)){//Si se reprogramó la cita exitosamente...
-                $paciente = $general->BuscarEmail($data['id_usuario']);
+                $paciente = $general->BuscarEmail($_SESSION['id']);
                 $medico = $general->BuscarEmail($data['id_medico']);
 
                 //Se importa la plantilla de citas reprogramadas
