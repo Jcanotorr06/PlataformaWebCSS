@@ -47,7 +47,7 @@
             <!-- Formulario de recuperacion invisible en pantallas grandes -->
                 <form method="post" class="w-100 d-flex flex-column align-items-center px-md-5 px-3 d-lg-none">
                     <div class="form-floating my-3 w-100">
-                        <input type="text" class="form-control" placeholder="00-0000-00000">
+                        <input type="text" name="cedula" class="form-control" placeholder="00-0000-00000">
                         <label>Cedula</label>
                     </div>
                     <button type="submit" name="recuperarr" class="btn btn-lg btn-primary rounded-pill fw-bold w-100 my-4 d-md-none">Enviar</button>
