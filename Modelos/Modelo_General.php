@@ -169,6 +169,20 @@
             }
         }
 
+        public function BuscarEmailCita($id_cita){
+            $res = $this->db->query("Select email from usuarios Join citas as cit on cit.id_usuario = usuarios.id Where cit.id = $id_cita");
+            if($res->num_rows > 0){
+                while($x = $res->fetch_assoc()){
+                    $usuario = $x;
+                }
+                $this->db->close();//Se cierra la conexion a la BD
+                $this->db = Conexion::Conectar();//Se restablece la conexion a la BD
+                return $usuario;
+            }else{
+                return false;
+            }
+        }
+
         //Busca datos generales del usuario por su cedula
         public function buscarUsuario($cedula){
             $res = $this->db->query("Call listar_datos_usuario('$cedula')");

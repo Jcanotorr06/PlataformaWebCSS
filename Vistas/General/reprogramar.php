@@ -92,8 +92,8 @@
                         </label>
                     </div>
                     <div class="col d-flex justify-content-center" onclick="errorSubmit()">
-                        <button type="submit"  disabled name="reprogramar" class="sbmt btn btn-secondary btn-lg text-white fw-bold rounded-pill py-3 w-50 d-md-block d-none">Agendar</button>
-                        <button type="submit"  disabled name="reprogramar2" class="sbmt btn btn-secondary btn-lg text-white fw-bold rounded-pill px-3 d-md-none w-100">Agendar</button>
+                        <button type="submit"  disabled name="reprogramar" class="sbmt btn btn-secondary btn-lg text-white fw-bold rounded-pill py-3 w-50 d-md-block d-none">Reprogramar</button>
+                        <button type="submit"  disabled name="reprogramar2" class="sbmt btn btn-secondary btn-lg text-white fw-bold rounded-pill px-3 d-md-none w-100">Reprogramar</button>
                     </div>    
                 </div>
             </div>
