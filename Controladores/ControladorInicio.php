@@ -120,7 +120,7 @@
                     $body = str_replace(['{{ nombre }}', '{{ llave }}'], [$nombre, $llave], $body);//Se reemplazan los campos
 
                     //Si el email se envia correctamente...
-                    if(enviarEmail($email, 'Cambiar Contrasela', $body)){
+                    if(enviarEmail($email, 'Cambiar Contraseña', $body)){
                         header('Location: /enviado');
                         exit();
                     }else{
