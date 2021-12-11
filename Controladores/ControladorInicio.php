@@ -128,7 +128,7 @@
                         require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Layouts/modal1Boton.php';//Se importa elm modal
                     }
                 }else{
-                    $mensaje_error = "Ha ocurrido un error, por favor intentelo de nuevo.";//Mensaje de error a mostrar en el modal
+                    $mensaje_error = "Ha ocurrido un error, por favor intentelo de nuevo..";//Mensaje de error a mostrar en el modal
                     require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Layouts/modal1Boton.php';//Se importa elm modal
                 }
             }else{
