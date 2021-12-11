@@ -60,7 +60,7 @@ CREATE TABLE `administrar_pacientes` (
 
 -- Dumping structure for procedure csss.agendar_cita
 DELIMITER //
-CREATE DEFINER=`root`@`localhost` PROCEDURE `agendar_cita`(
+CREATE DEFINER=`admin`@`%` PROCEDURE `agendar_cita`(
 	IN `id_usuario_sesion` INT,
 	IN `id_medico_sesion` INT,
 	IN `fecha_sesion` DATE,
@@ -76,7 +76,7 @@ DELIMITER ;
 
 -- Dumping structure for procedure csss.añadir_medico
 DELIMITER //
-CREATE DEFINER=`root`@`localhost` PROCEDURE `añadir_medico`(
+CREATE DEFINER=`admin`@`%` PROCEDURE `añadir_medico`(
 	IN `nombre_in` VARCHAR(50),
 	IN `apellido_in` VARCHAR(50),
 	IN `cedula_in` VARCHAR(15),
@@ -101,7 +101,7 @@ DELIMITER ;
 
 -- Dumping structure for procedure csss.check_usuario_existe
 DELIMITER //
-CREATE DEFINER=`root`@`localhost` PROCEDURE `check_usuario_existe`(
+CREATE DEFINER=`admin`@`%` PROCEDURE `check_usuario_existe`(
 	IN `cedula_in` VARCHAR(15),
 	IN `email_in` VARCHAR(255)
 
@@ -129,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `citas` (
   CONSTRAINT `citas_ibfk_3` FOREIGN KEY (`id_estado`) REFERENCES `estados` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table csss.citas: ~2 rows (approximately)
+-- Dumping data for table csss.citas: ~0 rows (approximately)
 /*!40000 ALTER TABLE `citas` DISABLE KEYS */;
 /*!40000 ALTER TABLE `citas` ENABLE KEYS */;
 
@@ -462,7 +462,7 @@ INSERT INTO `corregimientos` (`id`, `corregimiento`, `id_distrito`) VALUES
 
 -- Dumping structure for procedure csss.crear_usuario
 DELIMITER //
-CREATE DEFINER=`root`@`localhost` PROCEDURE `crear_usuario`(
+CREATE DEFINER=`admin`@`%` PROCEDURE `crear_usuario`(
 	IN `nombre_in` VARCHAR(50),
 	IN `apellido_in` VARCHAR(50),
 	IN `cedula_in` VARCHAR(15),
@@ -661,7 +661,7 @@ CREATE TABLE IF NOT EXISTS `horario_medicos` (
   CONSTRAINT `horario_medicos_ibfk_2` FOREIGN KEY (`id_dia`) REFERENCES `dias` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table csss.horario_medicos: ~10 rows (approximately)
+-- Dumping data for table csss.horario_medicos: ~30 rows (approximately)
 /*!40000 ALTER TABLE `horario_medicos` DISABLE KEYS */;
 INSERT INTO `horario_medicos` (`id_medico`, `id_dia`, `hora_entrada`, `hora_salida`) VALUES
 	(3, 1, '05:00:00', '17:00:00'),
@@ -693,12 +693,42 @@ INSERT INTO `horario_medicos` (`id_medico`, `id_dia`, `hora_entrada`, `hora_sali
 	(25, 6, '03:00:00', '15:00:00'),
 	(25, 7, '03:00:00', '15:00:00'),
 	(5, 3, '04:00:00', '16:00:00'),
-	(5, 4, '04:00:00', '16:00:00');
+	(5, 4, '04:00:00', '16:00:00'),
+	(26, 2, '05:00:00', '17:00:00'),
+	(26, 3, '05:00:00', '17:00:00'),
+	(26, 4, '05:00:00', '17:00:00'),
+	(26, 5, '05:00:00', '17:00:00'),
+	(26, 6, '05:00:00', '17:00:00'),
+	(27, 3, '08:00:00', '20:00:00'),
+	(27, 4, '08:00:00', '20:00:00'),
+	(27, 5, '08:00:00', '20:00:00'),
+	(27, 6, '08:00:00', '20:00:00'),
+	(27, 7, '08:00:00', '20:00:00'),
+	(28, 4, '07:00:00', '19:00:00'),
+	(28, 5, '07:00:00', '19:00:00'),
+	(28, 6, '07:00:00', '19:00:00'),
+	(28, 7, '07:00:00', '19:00:00'),
+	(28, 1, '07:00:00', '19:00:00'),
+	(29, 5, '10:00:00', '22:00:00'),
+	(29, 6, '10:00:00', '22:00:00'),
+	(29, 7, '10:00:00', '22:00:00'),
+	(29, 1, '10:00:00', '22:00:00'),
+	(29, 2, '10:00:00', '22:00:00'),
+	(30, 2, '10:00:00', '22:00:00'),
+	(30, 4, '10:00:00', '22:00:00'),
+	(30, 5, '10:00:00', '22:00:00'),
+	(30, 6, '10:00:00', '22:00:00'),
+	(30, 1, '10:00:00', '22:00:00'),
+	(31, 1, '03:00:00', '15:00:00'),
+	(31, 3, '03:00:00', '15:00:00'),
+	(31, 4, '03:00:00', '15:00:00'),
+	(31, 6, '03:00:00', '15:00:00'),
+	(31, 7, '03:00:00', '15:00:00');
 /*!40000 ALTER TABLE `horario_medicos` ENABLE KEYS */;
 
 -- Dumping structure for procedure csss.iniciar_sesion
 DELIMITER //
-CREATE DEFINER=`root`@`localhost` PROCEDURE `iniciar_sesion`(
+CREATE DEFINER=`admin`@`%` PROCEDURE `iniciar_sesion`(
 	IN `cedula_in` VARCHAR(15)
 )
 BEGIN
@@ -712,7 +742,7 @@ DELIMITER ;
 
 -- Dumping structure for procedure csss.listar_citas_medico
 DELIMITER //
-CREATE DEFINER=`root`@`localhost` PROCEDURE `listar_citas_medico`(
+CREATE DEFINER=`admin`@`%` PROCEDURE `listar_citas_medico`(
 	IN `id_usuario_sesion` INT
 
 
@@ -744,7 +774,7 @@ DELIMITER ;
 
 -- Dumping structure for procedure csss.listar_citas_paciente
 DELIMITER //
-CREATE DEFINER=`root`@`localhost` PROCEDURE `listar_citas_paciente`(
+CREATE DEFINER=`admin`@`%` PROCEDURE `listar_citas_paciente`(
 	IN `id_usuario_sesion` INT
 
 
@@ -816,7 +846,7 @@ CREATE TABLE `listar_especialidades_clinica` (
 
 -- Dumping structure for procedure csss.listar_horas_habiles
 DELIMITER //
-CREATE DEFINER=`root`@`localhost` PROCEDURE `listar_horas_habiles`(
+CREATE DEFINER=`admin`@`%` PROCEDURE `listar_horas_habiles`(
 	IN `id_medico_selec` INT
 
 
@@ -864,7 +894,7 @@ CREATE TABLE IF NOT EXISTS `medicos` (
   CONSTRAINT `medicos_ibfk_3` FOREIGN KEY (`id_clinica`) REFERENCES `clinicas` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table csss.medicos: ~2 rows (approximately)
+-- Dumping data for table csss.medicos: ~6 rows (approximately)
 /*!40000 ALTER TABLE `medicos` DISABLE KEYS */;
 INSERT INTO `medicos` (`id_usuario`, `id_especialidad`, `id_clinica`, `duracion_citas`) VALUES
 	(3, 8, 5, 60),
@@ -872,7 +902,13 @@ INSERT INTO `medicos` (`id_usuario`, `id_especialidad`, `id_clinica`, `duracion_
 	(22, 3, 17, 30),
 	(23, 16, 6, 120),
 	(24, 10, 20, 60),
-	(25, 2, 7, 120);
+	(25, 2, 7, 120),
+	(26, 3, 14, 30),
+	(27, 10, 5, 60),
+	(28, 8, 3, 60),
+	(29, 20, 17, 60),
+	(30, 2, 14, 120),
+	(31, 16, 20, 120);
 /*!40000 ALTER TABLE `medicos` ENABLE KEYS */;
 
 -- Dumping structure for procedure csss.modificar_clinica
@@ -993,7 +1029,7 @@ CREATE TABLE IF NOT EXISTS `recuperar_contraseña` (
   CONSTRAINT `recuperar_contraseña_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table csss.recuperar_contraseña: ~2 rows (approximately)
+-- Dumping data for table csss.recuperar_contraseña: ~1 rows (approximately)
 /*!40000 ALTER TABLE `recuperar_contraseña` DISABLE KEYS */;
 INSERT INTO `recuperar_contraseña` (`id_usuario`, `llave`, `expira`) VALUES
 	(17, '1389821668fdfea624a22efbdcace2012fce815fc92946d16571fb07966e1982', '2021-12-02 06:35:18');
@@ -1044,9 +1080,9 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   UNIQUE KEY `email` (`email`),
   KEY `id_rol` (`id_rol`),
   CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`id_rol`) REFERENCES `roles` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table csss.usuarios: ~12 rows (approximately)
+-- Dumping data for table csss.usuarios: ~16 rows (approximately)
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
 INSERT INTO `usuarios` (`id`, `nombre`, `apellido`, `cedula`, `email`, `contraseña`, `id_rol`) VALUES
 	(1, 'Joseph', 'Cano', 'admin', 'admin@email.com', '$2y$10$24GsbyosJcY146/dh6nKPOujwHNgsYUiyh.jF5tADhP9R/9.RnbJK', 1),
@@ -1064,7 +1100,13 @@ INSERT INTO `usuarios` (`id`, `nombre`, `apellido`, `cedula`, `email`, `contrase
 	(22, 'Kristina', 'Andrade', '9-0333-19065', 'kristina.andrade@css.pa', '$2y$10$qtconS0O0EHkWUZnDPTET.dxObTQnvyylHglOcuEnZcs1hzPX3/2G', 3),
 	(23, 'Dominick', 'Salazar', '6-5552-46039', 'dominick.salazar@css.pa', '$2y$10$6qhJqq6vdzqNRFTOT31vM.rtrSGdpywDPJB9RePBaPbA0HZeBExva', 3),
 	(24, 'Ariel', 'Corrigan', '7-503-39258', 'ariel.corrigan@css.pa', '$2y$10$JMb5Sj6osmBjrlMHaxe2N.pglHBtywxOSrvtAsm1x6w31XNr7sBw6', 3),
-	(25, 'Keisha', 'Booker', '8-087-5150', 'keisha.booker@css.pa', '$2y$10$D0lqb.xe1LqHuo8VkmvN8eiEUc4cfxUgL5x3OYC2X9ZMfNs.ue6g6', 3);
+	(25, 'Keisha', 'Booker', '8-087-5150', 'keisha.booker@css.pa', '$2y$10$D0lqb.xe1LqHuo8VkmvN8eiEUc4cfxUgL5x3OYC2X9ZMfNs.ue6g6', 3),
+	(26, 'Wade', 'Mayer', '2-943-50633', 'wade.mayer@css.pa', '$2y$10$3Sqb2h4cDOooe59hQgXJ4./0tuiVV69DBqYxYXcBTcGmc00VGLcDC', 3),
+	(27, 'Victor', 'Calahan', '4-073-57839', 'victor.callahan@css.pa', '$2y$10$gmMnBmlaIIH2VfuIOo4Uqu1EpGlXGXY1Pc6JWBZkzXokUGHeoPbjW', 3),
+	(28, 'Amalia', 'Mora', '10-803-9819', 'amalia.mora@css.pa', '$2y$10$Hcq.n2PcDFEoPDaWM5HAC.8TpL2nIep9LNFplQojaYMVwvU.i0uHW', 3),
+	(29, 'Briana', 'Meza', '7-7941-0421', 'briana.meza@css.pa', '$2y$10$6JGV6JudpgaHZ0muQDX4heeuNmn6pyddHiOQObQTUXxKHmSGNtbjy', 3),
+	(30, 'Kris', 'Morely', '6-651-7960', 'kris.morely@css.pa', '$2y$10$DOrq3GG49vY0uIiyneZmL.0w4D6Vqwn26IegiV/6ZUSR4J.Y4eNgm', 3),
+	(31, 'Ivy', 'Levy', '5-8844-1465', 'ivy.levy@css.pa', '$2y$10$GyCOeUaV3tvVC8sugjLbuOohEFyOJZALK2Wb5Hzy0PdTCt40OOXU.', 3);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 
 -- Dumping structure for procedure csss.validar_recuperar_contraseña
@@ -1086,7 +1128,7 @@ DELIMITER ;
 -- Dumping structure for view csss.administrar_clinicas
 -- Removing temporary table and create final VIEW structure
 DROP TABLE IF EXISTS `administrar_clinicas`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` VIEW `administrar_clinicas` AS SELECT cli.id, cli.clinica, cor.corregimiento, dis.distrito, pro.provincia, cli.id_corregimiento, cor.id_distrito, dis.id_provincia
+CREATE ALGORITHM=UNDEFINED DEFINER=`admin`@`%` VIEW `administrar_clinicas` AS SELECT cli.id, cli.clinica, cor.corregimiento, dis.distrito, pro.provincia, cli.id_corregimiento, cor.id_distrito, dis.id_provincia
 FROM clinicas as cli
 JOIN corregimientos as cor on cor.id = cli.id_corregimiento
 JOIN distritos as dis on dis.id = cor.id_distrito
@@ -1095,12 +1137,12 @@ JOIN provincias as pro on pro.id = dis.id_provincia ;
 -- Dumping structure for view csss.administrar_especialidades
 -- Removing temporary table and create final VIEW structure
 DROP TABLE IF EXISTS `administrar_especialidades`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` VIEW `administrar_especialidades` AS SELECT * FROM especialidades ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`admin`@`%` VIEW `administrar_especialidades` AS SELECT * FROM especialidades ;
 
 -- Dumping structure for view csss.administrar_medicos
 -- Removing temporary table and create final VIEW structure
 DROP TABLE IF EXISTS `administrar_medicos`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` VIEW `administrar_medicos` AS SELECT 
+CREATE ALGORITHM=UNDEFINED DEFINER=`admin`@`%` VIEW `administrar_medicos` AS SELECT 
 	usu.id, usu.nombre, usu.apellido, usu.cedula, usu.email, usu.contraseña, esp.especialidad, cli.clinica, med.duracion_citas, esp.id as id_especialidad, cli.id as id_clinica
 FROM usuarios AS usu 
 	JOIN medicos AS med ON usu.id = med.id_usuario
@@ -1111,13 +1153,13 @@ FROM usuarios AS usu
 -- Dumping structure for view csss.administrar_pacientes
 -- Removing temporary table and create final VIEW structure
 DROP TABLE IF EXISTS `administrar_pacientes`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` VIEW `administrar_pacientes` AS SELECT id, nombre, apellido, cedula, email, contraseña FROM usuarios
+CREATE ALGORITHM=UNDEFINED DEFINER=`admin`@`%` VIEW `administrar_pacientes` AS SELECT id, nombre, apellido, cedula, email, contraseña FROM usuarios
 WHERE usuarios.id_rol = 2 ;
 
 -- Dumping structure for view csss.datos_generales
 -- Removing temporary table and create final VIEW structure
 DROP TABLE IF EXISTS `datos_generales`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` VIEW `datos_generales` AS SELECT 
+CREATE ALGORITHM=UNDEFINED DEFINER=`admin`@`%` VIEW `datos_generales` AS SELECT 
 	(SELECT COUNT(*) FROM usuarios WHERE usuarios.id_rol = 2) as cant_pacientes,
 	(SELECT COUNT(*) FROM usuarios WHERE usuarios.id_rol = 3) as cant_medicos,
 	(SELECT COUNT(*) FROM clinicas) as cant_clinicas,
@@ -1126,39 +1168,39 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` VIEW `datos_generales` AS 
 -- Dumping structure for view csss.listar_clinicas_validas
 -- Removing temporary table and create final VIEW structure
 DROP TABLE IF EXISTS `listar_clinicas_validas`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` VIEW `listar_clinicas_validas` AS SELECT DISTINCT cli.id, cli.clinica, cli.id_corregimiento from clinicas as cli
+CREATE ALGORITHM=UNDEFINED DEFINER=`admin`@`%` VIEW `listar_clinicas_validas` AS SELECT DISTINCT cli.id, cli.clinica, cli.id_corregimiento from clinicas as cli
 JOIN listar_medicos as med on cli.id = med.id_clinica ;
 
 -- Dumping structure for view csss.listar_corregimientos_validos
 -- Removing temporary table and create final VIEW structure
 DROP TABLE IF EXISTS `listar_corregimientos_validos`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` VIEW `listar_corregimientos_validos` AS SELECT DISTINCT cor.id, cor.corregimiento, cor.id_distrito from corregimientos as cor
+CREATE ALGORITHM=UNDEFINED DEFINER=`admin`@`%` VIEW `listar_corregimientos_validos` AS SELECT DISTINCT cor.id, cor.corregimiento, cor.id_distrito from corregimientos as cor
 JOIN listar_clinicas_validas as cli on cli.id_corregimiento = cor.id ;
 
 -- Dumping structure for view csss.listar_distritos_validos
 -- Removing temporary table and create final VIEW structure
 DROP TABLE IF EXISTS `listar_distritos_validos`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` VIEW `listar_distritos_validos` AS SELECT DISTINCT dis.id, dis.distrito, dis.id_provincia from distritos as dis
+CREATE ALGORITHM=UNDEFINED DEFINER=`admin`@`%` VIEW `listar_distritos_validos` AS SELECT DISTINCT dis.id, dis.distrito, dis.id_provincia from distritos as dis
 JOIN listar_corregimientos_validos as cor on dis.id = cor.id_distrito ;
 
 -- Dumping structure for view csss.listar_especialidades_clinica
 -- Removing temporary table and create final VIEW structure
 DROP TABLE IF EXISTS `listar_especialidades_clinica`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` VIEW `listar_especialidades_clinica` AS SELECT DISTINCT esp.id, esp.especialidad, cli.id as id_clinica from especialidades as esp
+CREATE ALGORITHM=UNDEFINED DEFINER=`admin`@`%` VIEW `listar_especialidades_clinica` AS SELECT DISTINCT esp.id, esp.especialidad, cli.id as id_clinica from especialidades as esp
 JOIN medicos as med on esp.id = med.id_especialidad
 JOIN clinicas as cli on cli.id = med.id_clinica ;
 
 -- Dumping structure for view csss.listar_medicos
 -- Removing temporary table and create final VIEW structure
 DROP TABLE IF EXISTS `listar_medicos`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` VIEW `listar_medicos` AS SELECT usu.id, CONCAT(usu.nombre, " ", usu.apellido) as nombre, usu.email, usu.cedula, med.id_especialidad, med.id_clinica, med.duracion_citas
+CREATE ALGORITHM=UNDEFINED DEFINER=`admin`@`%` VIEW `listar_medicos` AS SELECT usu.id, CONCAT(usu.nombre, " ", usu.apellido) as nombre, usu.email, usu.cedula, med.id_especialidad, med.id_clinica, med.duracion_citas
 FROM usuarios as usu
 JOIN medicos as med on med.id_usuario = usu.id ;
 
 -- Dumping structure for view csss.listar_provincias_validas
 -- Removing temporary table and create final VIEW structure
 DROP TABLE IF EXISTS `listar_provincias_validas`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` VIEW `listar_provincias_validas` AS SELECT DISTINCT pro.id, pro.provincia from provincias as pro
+CREATE ALGORITHM=UNDEFINED DEFINER=`admin`@`%` VIEW `listar_provincias_validas` AS SELECT DISTINCT pro.id, pro.provincia from provincias as pro
 JOIN listar_distritos_validos as dis on pro.id = dis.id_provincia ;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
