@@ -1,11 +1,11 @@
 <?php
 
 function enviarEmail($to, $subject, $body){
-    /*$ headers  = 'MIME-Version: 1.0' . "\r\n";
+    $headers  = 'MIME-Version: 1.0' . "\r\n";
     $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
     $headers .= "From: notificaciones@csspanama.online" . "\r\n";
-    return mail($to, $subject, $body, $headers); */
-    exec("echo '$body' | mail -s '$subject' $to");
+    exec("echo '$body' | mail -a '$headers' -s '$subject' $to");
+    return mail($to, $subject, $body, $headers); 
 }
 
 ?>
