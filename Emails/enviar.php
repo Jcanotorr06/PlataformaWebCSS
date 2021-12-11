@@ -1,3 +1,4 @@
+<!-- Este archivo se utiliza para enviar emails -->
 <?php
 
 function enviarEmail($to, $subject, $body){
