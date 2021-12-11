@@ -23,9 +23,12 @@
                         <input name="apellido" required type="text" class="form-control" placeholder="Apellido">
                         <label>Apellido</label>
                     </div>
-                    <div class="form-floating my-3 w-100">
+                    <div class=" form-group form-floating my-3 w-100">
                         <input name="email" required type="email" class="form-control" placeholder="ejemplo@email.com">
                         <label>Email</label>
+                        <div class="form-text">
+                            Se recomienda utilizar outlook para evitar inconvenientes al recibir emails
+                        </div>
                     </div>
                     <div class="form-floating my-3 w-100">
                         <input name="cedula" required type="text" class="form-control" placeholder="00-0000-00000">
@@ -55,9 +58,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-floating my-3 w-100">
+                    <div class="form-group form-floating my-3 w-100">
                         <input name="email" required type="email" class="form-control" placeholder="ejemplo@email.com">
                         <label>Email</label>
+                        <div class="form-text">
+                            Se recomienda utilizar outlook para evitar inconvenientes al recibir emails
+                        </div>
                     </div>
                     <div class="form-floating my-3 w-100">
                         <input name="cedula" required type="text" class="form-control" placeholder="00-0000-00000">
