@@ -31,11 +31,11 @@
                         </div>
                     </div>
                     <div class="form-floating my-3 w-100">
-                        <input name="cedula" required type="text" class="form-control" placeholder="00-0000-00000">
+                        <input name="cedula" required type="text" class="form-control" placeholder="00-0000-00000" pattern="([1-9]{1}|10)-\d{1,4}-\d{1,5}" minlength="5" title="0-0-0">
                         <label>Cedula</label>
                     </div>
                     <div class="form-floating my-3 w-100">
-                        <input name="contraseña" required type="password" class="form-control" placeholder="Contraseña">
+                        <input name="contraseña" required type="password" class="form-control" placeholder="Contraseña" minlength="8">
                         <label>Contraseña</label>
                     </div>
                     <button type="submit" name="registro" class="btn btn-lg btn-primary rounded-pill fw-bold w-100 my-4 d-md-none">Registrarse</button>
@@ -66,11 +66,11 @@
                         </div>
                     </div>
                     <div class="form-floating my-3 w-100">
-                        <input name="cedula" required type="text" class="form-control" placeholder="00-0000-00000">
+                        <input name="cedula" required type="text" class="form-control" placeholder="00-0000-00000" pattern="([1-9]{1}|10)-\d{1,4}-\d{1,5}" minlength="5" title="0-0-0">
                         <label>Cedula</label>
                     </div>
                     <div class="form-floating my-3 w-100">
-                        <input name="contraseña" required type="password" class="form-control" placeholder="Contraseña">
+                        <input name="contraseña" required type="password" class="form-control" placeholder="Contraseña" minlength="8" title="Minimo 8 caracteres">
                         <label>Contraseña</label>
                     </div>
                     <button type="submit" name="registro" class="btn btn-lg btn-primary rounded-pill fw-bold w-50 my-4 py-3">Registrarse</button>

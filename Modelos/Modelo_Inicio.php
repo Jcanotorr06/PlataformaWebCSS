@@ -13,7 +13,6 @@
             if($res){//Si el query fue ejecutado exitosamente...
                 return true;
             }else{
-                echo mysqli_error($this->db);
                 return false;
             }
         }
