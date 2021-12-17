@@ -68,7 +68,7 @@
             if($inicio->registro($data)){//Si el registro fue completado exitosamente...
                 $this->registroExitoso(1, $_POST['email']);
             }else{
-                $mensaje_error = "Esta cédula ya se encuentra en uso. Por favor intente de nuevo";//Mensaje de error a mostrar en el modal
+                $mensaje_error = "Esta cédula o correo ya se encuentra en uso. Por favor intente de nuevo";//Mensaje de error a mostrar en el modal
                 require_once $_SERVER['DOCUMENT_ROOT'].'/Vistas/Layouts/modal1Boton.php';//Se importa elm modal
             } 
         }
